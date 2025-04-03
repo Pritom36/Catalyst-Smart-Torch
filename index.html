@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SmartTorch Mobile</title>
+    <title>Catalyst Smart Torch</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <!-- AdMob SDK -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADMOB_PUBLISHER_ID" crossorigin="anonymous"></script>
     <style>
         :root {
             --primary: #007AFF;
+            --primary-dark: #0066CC;
             --danger: #FF3B30;
             --warning: #FF9500;
+            --success: #34C759;
             --background: #FFFFFF;
             --card-bg: #F2F2F7;
             --text-primary: #1C1C1E;
             --text-secondary: #636366;
+            --section-bg: #F8F8FA;
         }
 
         * {
@@ -30,25 +38,30 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 20px;
         }
 
         .container {
-            max-width: 500px;
+            max-width: 800px;
             width: 100%;
-            margin: auto;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
+        /* Main Card Styles */
         .card {
             background: var(--card-bg);
             border-radius: 18px;
             padding: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
         .flashlight-icon {
@@ -65,13 +78,41 @@
 
         .flashlight-icon.active {
             background: var(--warning);
-            box-shadow: 0 0 20px rgba(255,149,0,0.3);
+            box-shadow: 0 0 20px rgba(255, 149, 0, 0.3);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
         h1 {
             font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        h3 {
+            font-size: 20px;
         }
 
         .subtitle {
@@ -79,6 +120,7 @@
             font-size: 16px;
         }
 
+        /* Timer Controls Section */
         .time-presets {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -159,6 +201,10 @@
             color: white;
         }
 
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
         .btn-danger {
             background: var(--danger);
             color: white;
@@ -166,6 +212,11 @@
 
         .btn-warning {
             background: var(--warning);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
             color: white;
         }
 
@@ -183,57 +234,255 @@
         }
 
         .status-active {
-            background: rgba(0,122,255,0.1);
+            background: rgba(0, 122, 255, 0.1);
             color: var(--primary);
         }
 
         .status-inactive {
-            background: rgba(116,116,128,0.1);
+            background: rgba(116, 116, 128, 0.1);
             color: var(--text-secondary);
         }
 
-        @media (max-width: 480px) {
+        /* Promotional Slider */
+        .promo-section {
+            background: var(--section-bg);
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .promo-slider {
+            margin: 20px 0;
+        }
+
+        .promo-slide {
+            display: grid;
+            place-items: center;
+            /* Center both horizontally & vertically */
+            height: 100%;
+        }
+
+        .promo-slide img {
+            max-width: 100%;
+            height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+        }
+
+
+        .promo-slide a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+        }
+
+        .promo-slide a:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Info Sections */
+        .info-section {
+            background: var(--section-bg);
+            border-radius: 18px;
+            padding: 24px;
+            margin-top: 20px;
+        }
+
+        .info-section h2 {
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .info-section p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .info-section ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .info-section li {
+            margin-bottom: 8px;
+        }
+
+        .about-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .creator-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .creator-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .creator-info h3 {
+            margin-bottom: 4px;
+        }
+
+        .creator-info p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .social-links a {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        /* Ad Containers */
+        .ad-container {
+            width: 100%;
+            margin: 20px 0;
+            text-align: center;
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .ad-banner {
+            width: 100%;
+            height: auto;
+            min-height: 90px;
+        }
+
+        .ad-rewarded {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px dashed gold;
+        }
+
+        /* Ad-related UI */
+        .ad-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+        }
+
+        .ad-loading-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
             .container {
-                padding: 0 12px;
+                padding: 15px;
             }
-            
+
             .time-presets {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .creator-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
             .time-input {
                 font-size: 18px;
                 padding: 14px;
             }
-            
+
             .countdown {
-                font-size: 40px;
+                font-size: 36px;
             }
-            
-            .controls {
-                flex-direction: column;
+
+            .promo-slide a {
+                padding: 8px 16px;
+                font-size: 14px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
+        <!-- Banner Ad at the top -->
+        <div class="ad-container" id="topBannerAd">
+            <!-- AdMob Banner Ad will be loaded here -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADMOB_PUBLISHER_ID"
+                 data-ad-slot="YOUR_BANNER_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <!-- Main Flashlight Card -->
         <div class="card">
             <div class="header">
                 <div class="flashlight-icon" id="flashlightIndicator">
                     <i class="fas fa-lightbulb" style="font-size: 32px; color: white;"></i>
                 </div>
-                <h1>SmartTorch</h1>
+                <h1>Catalyst Smart Torch</h1>
                 <p class="subtitle">Set timer for automatic flashlight off</p>
             </div>
 
             <div class="time-presets">
-                <button class="preset-btn" data-minutes="1">1 Min</button>
-                <button class="preset-btn" data-minutes="5">5 Min</button>
-                <button class="preset-btn" data-minutes="10">10 Min</button>
-                <button class="preset-btn" data-minutes="15">15 Min</button>
-                <button class="preset-btn" data-minutes="30">30 Min</button>
-                <button class="preset-btn" data-minutes="60">60 Min</button>
+                <button class="preset-btn ad-required" data-minutes="1">1 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="5">5 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="10">10 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="15">15 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="30">30 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="60">60 Min (Watch Ad)</button>
             </div>
 
             <div class="time-inputs">
@@ -254,22 +503,118 @@
             <div class="countdown" id="countdown">00:00:00</div>
 
             <div class="controls">
-                <button id="cancelBtn" class="btn btn-danger" disabled>
-                    <i class="fas fa-times"></i> Cancel
+                <button id="cancelBtn" class="btn btn-danger ad-required" disabled>
+                    <i class="fas fa-times"></i> Cancel (Watch Ad)
                 </button>
-                <button id="pauseBtn" class="btn btn-warning" disabled>
-                    <i class="fas fa-pause"></i> Pause
+                <button id="pauseBtn" class="btn btn-warning ad-required" disabled>
+                    <i class="fas fa-pause"></i> Pause (Watch Ad)
                 </button>
-                <button id="startBtn" class="btn btn-primary">
-                    <i class="fas fa-play"></i> Start
+                <button id="startBtn" class="btn btn-primary ad-required">
+                    <i class="fas fa-play"></i> Start (Watch Ad)
                 </button>
             </div>
 
             <div class="status status-inactive" id="status">Ready to start</div>
         </div>
+
+        <!-- Banner Ad in the middle -->
+        <div class="ad-container" id="middleBannerAd">
+            <!-- AdMob Banner Ad will be loaded here -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADMOB_PUBLISHER_ID"
+                 data-ad-slot="YOUR_BANNER_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <!-- Promotional Slider -->
+        <div class="promo-section">
+            <h2>Free Resources</h2>
+            <p>Download our free PDF guides to learn more about smart lighting solutions</p>
+
+            <div class="promo-slider">
+                <div class="promo-slide">
+                    <img src="2.jpg" alt="Smart Lighting Guide">
+                    <a href="https://example.com/pdf1" target="_blank">Let's Go</a>
+                </div>
+                <div class="promo-slide">
+                    <img src="1.jpg"
+                        alt="Home Automation Tips">
+                    <a href="https://example.com/pdf2" target="_blank">Let's Go</a>
+                </div>
+                <div class="promo-slide">
+                    <img src="https://via.placeholder.com/300x400/34C759/FFFFFF?text=Energy+Saving+Guide"
+                        alt="Energy Saving Guide">
+                    <a href="https://example.com/pdf3" target="_blank">Let's Go</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions Section -->
+        <div class="info-section">
+            <h2>How It Works</h2>
+            <p>Catalyst Smart Torch helps you manage your device's flashlight with timer functionality:</p>
+            <ul>
+                <li>Set hours, minutes, or seconds for automatic flashlight turn-off</li>
+                <li>Use presets for common time intervals (requires watching a short ad)</li>
+                <li>Pause/resume the timer as needed (requires watching a short ad)</li>
+                <li>Cancel anytime to turn off immediately (requires watching a short ad)</li>
+            </ul>
+            <p>The app works best on Chrome for Android with devices that support flashlight functionality.</p>
+            <p><strong>Note:</strong> Watching ads helps support the development of this free app.</p>
+        </div>
+
+        <!-- About Section -->
+        <div class="info-section about-section" class="poem"></div>
+        <h2>About Us</h2>
+        <p>রাতে বই হাতে ঘুমিয়ে পড়ি, মোবাইল জ্বলে টিমটিম,</p>
+        <p>ব্যাটারি বলে, "বাঁচাও আমায়! নাই আর কিছু স্টিম!"</p>
+        <p>গরম হয়ে ফোনটা কয়, "আগুন লাগবে, ঠান্ডা দে!"</p>
+        <p>বিদ্যুৎ হাসে, "এভাবেই যদি চলে, বিলটা দিবি কে?"</p>
+        <p>তাই বানালাম স্মার্ট লাইট, টাইমার দাও, ঘুমাও বেঁধে!
+
+        <div class="creator-card">
+            <img src="admin.jpg" alt="Creator">
+            <div class="creator-info">
+                <h3>John Doe</h3>
+                <p>Founder & Lead Developer</p>
+                <div class="social-links">
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <p>Contact us at: <a href="mailto:pritombhowmik360@gmail.com">pritombhowmik360@gmail.com</a></p>
     </div>
 
+    <!-- Banner Ad at the bottom -->
+    <div class="ad-container" id="bottomBannerAd">
+        <!-- AdMob Banner Ad will be loaded here -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR_ADMOB_PUBLISHER_ID"
+             data-ad-slot="YOUR_BANNER_AD_SLOT_ID"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- Ad loading overlay (hidden by default) -->
+    <div class="ad-loading" id="adLoadingOverlay" style="display: none;">
+        <div class="ad-loading-spinner"></div>
+        <h3>Loading Ad...</h3>
+        <p>Please wait while we load the advertisement.</p>
+        <p>After watching the ad, you'll be able to use this feature.</p>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
     <script>
+        // DOM Elements
         const hoursInput = document.getElementById('hours');
         const minutesInput = document.getElementById('minutes');
         const secondsInput = document.getElementById('seconds');
@@ -280,12 +625,115 @@
         const status = document.getElementById('status');
         const presetBtns = document.querySelectorAll('.preset-btn');
         const flashlightIndicator = document.getElementById('flashlightIndicator');
+        const adRequiredButtons = document.querySelectorAll('.ad-required');
+        const adLoadingOverlay = document.getElementById('adLoadingOverlay');
 
+        // App State
         let mediaStream = null;
         let timer = null;
         let remainingTime = 0;
         let isPaused = false;
         let isRunning = false;
+        let lastAdShownTime = 0;
+        const AD_INTERVAL = 5 * 60 * 1000; // 5 minutes in milliseconds
+        let rewardedAdReady = false;
+        let interstitialAdReady = false;
+
+        // Initialize Slick Slider
+        $(document).ready(function () {
+            $('.promo-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                adaptiveHeight: true,
+                autoplay: true,
+                autoplaySpeed: 3000
+            });
+
+            // Initialize ads
+            initAds();
+        });
+
+        // Initialize AdMob ads
+        function initAds() {
+            try {
+                // Load banner ads
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                
+                // Initialize rewarded ads
+                initRewardedAds();
+                
+                // Initialize interstitial ads
+                initInterstitialAds();
+                
+                // Set up interval for showing interstitial ads
+                setInterval(checkAdInterval, 60000); // Check every minute
+            } catch (error) {
+                console.error('Ad initialization error:', error);
+            }
+        }
+
+        // Initialize rewarded ads
+        function initRewardedAds() {
+            // In a real implementation, you would use the AdMob SDK
+            // This is a simplified version for demonstration
+            rewardedAdReady = true;
+            console.log('Rewarded ads initialized');
+        }
+
+        // Initialize interstitial ads
+        function initInterstitialAds() {
+            // In a real implementation, you would use the AdMob SDK
+            // This is a simplified version for demonstration
+            interstitialAdReady = true;
+            console.log('Interstitial ads initialized');
+        }
+
+        // Check if it's time to show an interstitial ad
+        function checkAdInterval() {
+            const currentTime = Date.now();
+            if (currentTime - lastAdShownTime >= AD_INTERVAL && interstitialAdReady) {
+                showInterstitialAd();
+                lastAdShownTime = currentTime;
+            }
+        }
+
+        // Show a rewarded ad and execute callback when completed
+        function showRewardedAd(actionCallback) {
+            if (!rewardedAdReady) {
+                actionCallback();
+                return;
+            }
+            
+            // Show loading overlay
+            adLoadingOverlay.style.display = 'flex';
+            
+            // In a real implementation, you would show the AdMob rewarded ad here
+            // For this demo, we'll simulate the ad experience
+            console.log('Showing rewarded ad...');
+            
+            // Simulate ad loading and showing
+            setTimeout(() => {
+                console.log('User watched the rewarded ad');
+                
+                // Hide loading overlay
+                adLoadingOverlay.style.display = 'none';
+                
+                // Execute the callback
+                if (typeof actionCallback === 'function') {
+                    actionCallback();
+                }
+            }, 3000); // Simulate 3 second ad
+        }
+
+        // Show an interstitial ad
+        function showInterstitialAd() {
+            if (!interstitialAdReady) return;
+            
+            console.log('Showing interstitial ad...');
+            // In a real implementation, you would show the AdMob interstitial ad here
+        }
 
         // Flashlight control with proper cleanup
         async function toggleFlashlight(state) {
@@ -295,11 +743,11 @@
                         video: { facingMode: 'environment', advanced: [{ torch: true }] }
                     });
                     const track = stream.getVideoTracks()[0];
-                    
+
                     if (mediaStream) {
                         mediaStream.getTracks().forEach(t => t.stop());
                     }
-                    
+
                     mediaStream = stream;
                     await track.applyConstraints({ advanced: [{ torch: true }] });
                     flashlightIndicator.classList.add('active');
@@ -322,13 +770,16 @@
             if (!isPaused && remainingTime > 0) {
                 remainingTime -= 1000;
                 updateDisplay();
-                
+
                 if (remainingTime <= 0) {
                     clearInterval(timer);
                     isRunning = false;
                     toggleFlashlight(false);
                     status.textContent = 'Timer completed';
                     resetControls();
+                    
+                    // Show an ad when timer completes
+                    showInterstitialAd();
                 }
             }
         }
@@ -337,22 +788,22 @@
             const hours = parseInt(hoursInput.value) || 0;
             const minutes = parseInt(minutesInput.value) || 0;
             const seconds = parseInt(secondsInput.value) || 0;
-            
+
             remainingTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
-            
+
             if (remainingTime <= 0) {
                 status.textContent = 'Please set a valid time';
                 return;
             }
-            
+
             clearInterval(timer);
             isRunning = true;
             isPaused = false;
-            
+
             toggleFlashlight(true);
             timer = setInterval(updateTimer, 1000);
             updateDisplay();
-            
+
             startBtn.disabled = true;
             pauseBtn.disabled = false;
             cancelBtn.disabled = false;
@@ -361,16 +812,16 @@
 
         function togglePause() {
             isPaused = !isPaused;
-            
+
             if (isPaused) {
                 toggleFlashlight(false);
                 status.textContent = 'Timer paused';
-                pauseBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
+                pauseBtn.innerHTML = '<i class="fas fa-play"></i> Resume (Watch Ad)';
             } else {
                 if (remainingTime > 0) {
                     toggleFlashlight(true);
                     status.textContent = 'Timer resumed';
-                    pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                    pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause (Watch Ad)';
                 }
             }
         }
@@ -384,7 +835,7 @@
             updateDisplay();
             resetControls();
             status.textContent = 'Timer cancelled';
-            
+
             // Force cleanup
             if (mediaStream) {
                 mediaStream.getTracks().forEach(track => track.stop());
@@ -396,8 +847,8 @@
             const hours = Math.floor(remainingTime / 3600000);
             const minutes = Math.floor((remainingTime % 3600000) / 60000);
             const seconds = Math.floor((remainingTime % 60000) / 1000);
-            
-            countdown.textContent = 
+
+            countdown.textContent =
                 `${String(hours).padStart(2, '0')}:
                  ${String(minutes).padStart(2, '0')}:
                  ${String(seconds).padStart(2, '0')}`;
@@ -407,22 +858,39 @@
             startBtn.disabled = false;
             pauseBtn.disabled = true;
             cancelBtn.disabled = true;
-            pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+            pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause (Watch Ad)';
         }
 
-        // Event listeners
-        startBtn.addEventListener('click', startTimer);
-        pauseBtn.addEventListener('click', togglePause);
-        cancelBtn.addEventListener('click', cancelTimer);
-
-        presetBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const minutes = parseInt(btn.dataset.minutes);
-                hoursInput.value = Math.floor(minutes / 60);
-                minutesInput.value = minutes % 60;
-                secondsInput.value = 0;
-                presetBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+        // Event listeners for buttons that require ads
+        adRequiredButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const buttonId = this.id;
+                
+                showRewardedAd(() => {
+                    // This callback executes after the ad is watched
+                    switch(buttonId) {
+                        case 'startBtn':
+                            startTimer();
+                            break;
+                        case 'pauseBtn':
+                            togglePause();
+                            break;
+                        case 'cancelBtn':
+                            cancelTimer();
+                            break;
+                        default:
+                            // Handle preset buttons
+                            if (this.classList.contains('preset-btn')) {
+                                const minutes = parseInt(this.dataset.minutes);
+                                hoursInput.value = Math.floor(minutes / 60);
+                                minutesInput.value = minutes % 60;
+                                secondsInput.value = 0;
+                                presetBtns.forEach(b => b.classList.remove('active'));
+                                this.classList.add('active');
+                            }
+                            break;
+                    }
+                });
             });
         });
 
@@ -438,4 +906,5 @@
         });
     </script>
 </body>
+
 </html>
