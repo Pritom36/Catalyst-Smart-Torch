@@ -2,111 +2,142 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SmartTorch Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --danger: #ef233c;
-            --danger-dark: #d90429;
-            --warning: #ff9e00;
-            --warning-dark: #ff8500;
-            --success: #4cc9f0;
-            --success-dark: #4895ef;
-            --dark: #2b2d42;
-            --light: #f8f9fa;
-            --gray: #8d99ae;
-            --card-bg: #ffffff;
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --primary: #007AFF;
+            --primary-dark: #0066CC;
+            --danger: #FF3B30;
+            --danger-dark: #E60000;
+            --warning: #FF9500;
+            --warning-dark: #F29400;
+            --success: #34C759;
+            --success-dark: #248A3D;
+            --dark: #1C1C1E;
+            --light: #FFFFFF;
+            --gray: #8E8E93;
+            --bg: #F2F2F7;
+            --card-bg: var(--light);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
             color: var(--dark);
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            line-height: 1.6;
+            padding: 16px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 500px;
+        .app-container {
             width: 100%;
-            margin: 0 auto;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-height: 800px;
+            background-color: var(--light);
+            border-radius: 24px;
             box-shadow: var(--shadow);
-            text-align: center;
-            position: relative;
             overflow: hidden;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            background: linear-gradient(90deg, var(--primary), var(--success));
+        .header {
+            padding: 24px 16px 16px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
             color: var(--dark);
         }
 
         .subtitle {
             color: var(--gray);
             font-size: 14px;
-            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .content {
+            flex: 1;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .flashlight-indicator {
+            width: 80px;
+            height: 80px;
+            background-color: var(--light);
+            border: 2px solid #E5E5EA;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            transition: all 0.3s ease;
+        }
+
+        .flashlight-indicator.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 8px rgba(0, 122, 255, 0.15);
+        }
+
+        .flashlight-icon {
+            font-size: 28px;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .flashlight-indicator.active .flashlight-icon {
+            color: white;
         }
 
         .time-presets {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
+            gap: 8px;
+            margin-bottom: 24px;
         }
 
         .preset-btn {
             background-color: var(--light);
-            border: 2px solid #e9ecef;
+            border: 1px solid #E5E5EA;
             border-radius: 12px;
             padding: 12px;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            color: var(--dark);
         }
 
-        .preset-btn:hover {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .preset-btn.active {
+        .preset-btn:hover, .preset-btn.active {
             background-color: var(--primary);
             color: white;
             border-color: var(--primary);
@@ -115,65 +146,70 @@
         .time-inputs {
             display: flex;
             justify-content: space-between;
-            margin: 25px 0;
+            margin: 16px 0;
+            gap: 8px;
         }
 
         .time-column {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1;
         }
 
         .time-column label {
             font-weight: 500;
             margin-bottom: 8px;
             color: var(--gray);
-            font-size: 14px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .time-input {
-            width: 80px;
-            padding: 15px;
-            font-size: 18px;
+            width: 100%;
+            padding: 16px;
+            font-size: 20px;
             font-weight: 600;
             text-align: center;
-            border: 2px solid #e9ecef;
+            border: 1px solid #E5E5EA;
             border-radius: 12px;
             background-color: var(--light);
-            transition: all 0.3s ease;
+            color: var(--dark);
         }
 
         .time-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
         }
 
         .countdown {
             font-size: 48px;
             font-weight: 700;
             font-family: 'Courier New', monospace;
-            margin: 20px 0;
+            margin: 16px 0;
             color: var(--dark);
+            text-align: center;
             letter-spacing: 2px;
         }
 
-        .buttons {
+        .action-buttons {
             display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 12px;
+            margin-top: auto;
+            padding: 16px;
+            background-color: var(--light);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .btn {
             flex: 1;
-            padding: 15px;
+            padding: 16px;
             border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -182,7 +218,7 @@
         }
 
         .btn:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
@@ -191,9 +227,8 @@
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn-primary:active {
             background-color: var(--primary-dark);
-            transform: translateY(-2px);
         }
 
         .btn-danger {
@@ -201,9 +236,8 @@
             color: white;
         }
 
-        .btn-danger:hover {
+        .btn-danger:active {
             background-color: var(--danger-dark);
-            transform: translateY(-2px);
         }
 
         .btn-warning {
@@ -211,89 +245,76 @@
             color: white;
         }
 
-        .btn-warning:hover {
+        .btn-warning:active {
             background-color: var(--warning-dark);
-            transform: translateY(-2px);
         }
 
         .status {
-            margin-top: 20px;
+            margin-top: 16px;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 500;
+            text-align: center;
         }
 
         .status-info {
-            background-color: rgba(67, 97, 238, 0.1);
+            background-color: rgba(0, 122, 255, 0.1);
             color: var(--primary);
         }
 
         .status-success {
-            background-color: rgba(76, 201, 240, 0.1);
+            background-color: rgba(52, 199, 89, 0.1);
             color: var(--success-dark);
         }
 
         .status-warning {
-            background-color: rgba(255, 158, 0, 0.1);
+            background-color: rgba(255, 149, 0, 0.1);
             color: var(--warning-dark);
         }
 
         .status-error {
-            background-color: rgba(239, 35, 60, 0.1);
+            background-color: rgba(255, 59, 48, 0.1);
             color: var(--danger-dark);
         }
 
-        .flashlight-icon {
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .flashlight-icon.active {
-            background-color: var(--warning);
-            box-shadow: 0 5px 15px rgba(255, 158, 0, 0.3);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @media (max-width: 480px) {
+        @media (max-width: 400px) {
             .time-presets {
                 grid-template-columns: repeat(2, 1fr);
             }
             
             .time-input {
-                width: 70px;
-                padding: 12px;
+                padding: 14px;
+                font-size: 18px;
             }
             
             .countdown {
-                font-size: 36px;
+                font-size: 40px;
             }
+            
+            .btn {
+                padding: 14px;
+                font-size: 15px;
+            }
+        }
+
+        /* iOS-like touch feedback */
+        .btn:active, .preset-btn:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="flashlight-icon" id="flashlightIndicator">
-                <i class="fas fa-lightbulb" style="font-size: 24px; color: white;"></i>
-            </div>
-            
+    <div class="app-container">
+        <div class="header">
             <h1>SmartTorch Pro</h1>
-            <p class="subtitle">Set a delay after which the flashlight should turn off</p>
+            <p class="subtitle">Set timer to automatically turn off flashlight</p>
+        </div>
+        
+        <div class="content">
+            <div class="flashlight-indicator" id="flashlightIndicator">
+                <i class="fas fa-lightbulb flashlight-icon"></i>
+            </div>
             
             <div class="time-presets">
                 <button class="preset-btn" data-minutes="1">1 min</button>
@@ -306,34 +327,34 @@
             
             <div class="time-inputs">
                 <div class="time-column">
-                    <label>HOURS</label>
+                    <label>Hours</label>
                     <input type="number" id="hours" class="time-input" min="0" value="0" placeholder="00">
                 </div>
                 <div class="time-column">
-                    <label>MINUTES</label>
+                    <label>Minutes</label>
                     <input type="number" id="minutes" class="time-input" min="0" max="59" value="0" placeholder="00">
                 </div>
                 <div class="time-column">
-                    <label>SECONDS</label>
+                    <label>Seconds</label>
                     <input type="number" id="seconds" class="time-input" min="0" max="59" value="0" placeholder="00">
                 </div>
             </div>
             
             <div class="countdown" id="countdown">00:00:00</div>
             
-            <div class="buttons">
-                <button id="cancelBtn" class="btn btn-danger" disabled>
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-                <button id="pauseBtn" class="btn btn-warning" disabled>
-                    <i class="fas fa-pause"></i> Pause
-                </button>
-                <button id="startBtn" class="btn btn-primary">
-                    <i class="fas fa-play"></i> Start
-                </button>
-            </div>
-            
             <div class="status status-info" id="status">Ready to set timer</div>
+        </div>
+        
+        <div class="action-buttons">
+            <button id="cancelBtn" class="btn btn-danger" disabled>
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button id="pauseBtn" class="btn btn-warning" disabled>
+                <i class="fas fa-pause"></i> Pause
+            </button>
+            <button id="startBtn" class="btn btn-primary">
+                <i class="fas fa-play"></i> Start
+            </button>
         </div>
     </div>
 
@@ -383,7 +404,7 @@
             }
         }
 
-        // Toggle flashlight
+        // Toggle flashlight (with proper error handling)
         async function toggleFlashlight(state) {
             try {
                 if (state) {
@@ -397,6 +418,7 @@
                     const stream = await navigator.mediaDevices.getUserMedia(constraints);
                     const track = stream.getVideoTracks()[0];
                     
+                    // Stop any existing stream
                     if (mediaStream) {
                         mediaStream.getTracks().forEach(t => t.stop());
                     }
@@ -410,6 +432,7 @@
                     flashlightIndicator.classList.add('active');
                     updateStatus('Flashlight is ON', 'success');
                 } else {
+                    // Only turn off if we have control of the flashlight
                     if (mediaStream) {
                         mediaStream.getTracks().forEach(track => track.stop());
                         mediaStream = null;
@@ -437,14 +460,10 @@
                 `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
             
             // Visual feedback when time is running low
-            if (remainingTime <= 10000) { // 10 seconds or less
+            if (remainingTime <= 10000 && remainingTime > 0) { // 10 seconds or less
                 countdownDisplay.style.color = 'var(--danger)';
-                countdownDisplay.style.animation = 'none';
-                void countdownDisplay.offsetWidth; // Trigger reflow
-                countdownDisplay.style.animation = 'pulse 0.5s infinite';
             } else {
                 countdownDisplay.style.color = 'var(--dark)';
-                countdownDisplay.style.animation = 'none';
             }
         }
 
@@ -457,7 +476,7 @@
                     clearInterval(timerInterval);
                     remainingTime = 0;
                     isTimerRunning = false;
-                    toggleFlashlight(false);
+                    toggleFlashlight(false); // Ensure flashlight turns off
                     updateCountdownDisplay();
                     updateStatus('Timer completed', 'success');
                     resetControls();
@@ -516,7 +535,7 @@
             remainingTime = 0;
             isPaused = false;
             isTimerRunning = false;
-            toggleFlashlight(false);
+            toggleFlashlight(false); // Ensure flashlight turns off
             updateCountdownDisplay();
             updateStatus('Timer cancelled', 'info');
             resetControls();
