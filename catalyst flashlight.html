@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <!-- AdMob SDK -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADMOB_PUBLISHER_ID" crossorigin="anonymous"></script>
     <style>
         :root {
             --primary: #007AFF;
@@ -142,11 +144,6 @@
             border-color: var(--primary);
         }
 
-        .preset-btn.ad-required::after {
-            font-size: 0.8em;
-            opacity: 0.8;
-        }
-
         .time-inputs {
             display: flex;
             justify-content: space-between;
@@ -228,11 +225,6 @@
             cursor: not-allowed;
         }
 
-        .btn.ad-required::after {
-            font-size: 0.8em;
-            opacity: 0.8;
-        }
-
         .status {
             text-align: center;
             margin-top: 24px;
@@ -266,6 +258,7 @@
         .promo-slide {
             display: grid;
             place-items: center;
+            /* Center both horizontally & vertically */
             height: 100%;
         }
 
@@ -276,6 +269,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             object-fit: cover;
         }
+
 
         .promo-slide a {
             display: inline-block;
@@ -381,6 +375,11 @@
             min-height: 90px;
         }
 
+        .ad-rewarded {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px dashed gold;
+        }
+
         /* Ad-related UI */
         .ad-loading {
             position: fixed;
@@ -450,18 +449,22 @@
                 padding: 8px 16px;
                 font-size: 14px;
             }
-
-            .preset-btn.ad-required::after,
-            .btn.ad-required::after {
-                content: " (Ad)";
-            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-
+        <!-- Banner Ad at the top -->
+        <div class="ad-container" id="topBannerAd">
+            <!-- AdMob Banner Ad will be loaded here -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADMOB_PUBLISHER_ID"
+                 data-ad-slot="YOUR_BANNER_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
 
         <!-- Main Flashlight Card -->
         <div class="card">
@@ -474,12 +477,12 @@
             </div>
 
             <div class="time-presets">
-                <button class="preset-btn ad-required" data-minutes="1">1 Min</button>
-                <button class="preset-btn ad-required" data-minutes="5">5 Min</button>
-                <button class="preset-btn ad-required" data-minutes="10">10 Min</button>
-                <button class="preset-btn ad-required" data-minutes="15">15 Min</button>
-                <button class="preset-btn ad-required" data-minutes="30">30 Min</button>
-                <button class="preset-btn ad-required" data-minutes="60">60 Min</button>
+                <button class="preset-btn ad-required" data-minutes="1">1 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="5">5 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="10">10 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="15">15 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="30">30 Min (Watch Ad)</button>
+                <button class="preset-btn ad-required" data-minutes="60">60 Min (Watch Ad)</button>
             </div>
 
             <div class="time-inputs">
@@ -501,22 +504,34 @@
 
             <div class="controls">
                 <button id="cancelBtn" class="btn btn-danger ad-required" disabled>
-                    <i class="fas fa-times"></i> Cancel
+                    <i class="fas fa-times"></i> Cancel (Watch Ad)
                 </button>
                 <button id="pauseBtn" class="btn btn-warning ad-required" disabled>
-                    <i class="fas fa-pause"></i> Pause
+                    <i class="fas fa-pause"></i> Pause (Watch Ad)
                 </button>
                 <button id="startBtn" class="btn btn-primary ad-required">
-                    <i class="fas fa-play"></i> Start
+                    <i class="fas fa-play"></i> Start (Watch Ad)
                 </button>
             </div>
 
             <div class="status status-inactive" id="status">Ready to start</div>
         </div>
 
+        <!-- Banner Ad in the middle -->
+        <div class="ad-container" id="middleBannerAd">
+            <!-- AdMob Banner Ad will be loaded here -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADMOB_PUBLISHER_ID"
+                 data-ad-slot="YOUR_BANNER_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
         <!-- Promotional Slider -->
         <div class="promo-section">
-            <h2 align="center">Free PDF and Audio Books</h2>
+            <h2>Free Resources</h2>
+            <p>Download our free PDF guides to learn more about smart lighting solutions</p>
 
             <div class="promo-slider">
                 <div class="promo-slide">
@@ -524,11 +539,13 @@
                     <a href="https://example.com/pdf1" target="_blank">Let's Go</a>
                 </div>
                 <div class="promo-slide">
-                    <img src="1.jpg" alt="Home Automation Tips">
+                    <img src="1.jpg"
+                        alt="Home Automation Tips">
                     <a href="https://example.com/pdf2" target="_blank">Let's Go</a>
                 </div>
                 <div class="promo-slide">
-                    <img src="https://via.placeholder.com/300x400/34C759/FFFFFF?text=Energy+Saving+Guide" alt="Energy Saving Guide">
+                    <img src="https://via.placeholder.com/300x400/34C759/FFFFFF?text=Energy+Saving+Guide"
+                        alt="Energy Saving Guide">
                     <a href="https://example.com/pdf3" target="_blank">Let's Go</a>
                 </div>
             </div>
@@ -549,49 +566,47 @@
         </div>
 
         <!-- About Section -->
-        <div class="info-section about-section">
-            <h2>About Us</h2>
-            <p>রাতে বই হাতে ঘুমিয়ে পড়ি, মোবাইল জ্বলে টিমটিম,</p>
-            <p>ব্যাটারি বলে, "বাঁচাও আমায়! নাই আর কিছু স্টিম!"</p>
-            <p>গরম হয়ে ফোনটা কয়, "আগুন লাগবে, ঠান্ডা দে!"</p>
-            <p>বিদ্যুৎ হাসে, "এভাবেই যদি চলে, বিলটা দিবি কে?"</p>
-            <p>তাই বানালাম স্মার্ট লাইট, টাইমার দাও, ঘুমাও বেঁধে!</p>
+        <div class="info-section about-section" class="poem"></div>
+        <h2>About Us</h2>
+        <p>রাতে বই হাতে ঘুমিয়ে পড়ি, মোবাইল জ্বলে টিমটিম,</p>
+        <p>ব্যাটারি বলে, "বাঁচাও আমায়! নাই আর কিছু স্টিম!"</p>
+        <p>গরম হয়ে ফোনটা কয়, "আগুন লাগবে, ঠান্ডা দে!"</p>
+        <p>বিদ্যুৎ হাসে, "এভাবেই যদি চলে, বিলটা দিবি কে?"</p>
+        <p>তাই বানালাম স্মার্ট লাইট, টাইমার দাও, ঘুমাও বেঁধে!
 
-            <div class="creator-card">
-                <img src="admin.jpg" alt="Creator">
-                <div class="creator-info">
-                    <h3>Pritom Bhowmik</h3>
-                    <p>Founder & Lead Developer</p>
-                    <div class="social-links">
-                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    </div>
+        <div class="creator-card">
+            <img src="admin.jpg" alt="Creator">
+            <div class="creator-info">
+                <h3>John Doe</h3>
+                <p>Founder & Lead Developer</p>
+                <div class="social-links">
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
-
-            <p>Contact us at: <a href="mailto:pritombhowmik360@gmail.com">pritombhowmik360@gmail.com</a></p>
         </div>
 
-        <!-- Banner Ad at the bottom -->
-        <div class="ad-container">
-            <!-- Adsterra Banner Ad -->
-            <iframe src="https://wipehumorousbeen.com/nnj13hphjx?key=bf9d7106eeef221c1e9861bf2a06ceef" width="728" height="90" scrolling="no" frameborder="0"></iframe>
-        </div>
+        <p>Contact us at: <a href="mailto:pritombhowmik360@gmail.com">pritombhowmik360@gmail.com</a></p>
+    </div>
+
+    <!-- Banner Ad at the bottom -->
+    <div class="ad-container" id="bottomBannerAd">
+        <!-- AdMob Banner Ad will be loaded here -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR_ADMOB_PUBLISHER_ID"
+             data-ad-slot="YOUR_BANNER_AD_SLOT_ID"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
 
     <!-- Ad loading overlay (hidden by default) -->
     <div class="ad-loading" id="adLoadingOverlay" style="display: none;">
         <div class="ad-loading-spinner"></div>
-        <h3>Please ignore watch the ad to continue</h3>
-        <p>We're showing an advertisement to support this free app.</p>
-        <p>After 5 sec you would able to close this ad</p>
-        <div id="adFrameContainer" style="width: 100%; height: 300px; margin-top: 20px;">
-            <iframe id="adFrame" src="" style="width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-        <button id="continueBtn" style="margin-top: 20px; padding: 10px 20px; background: var(--success); color: white; border: none; border-radius: 5px; cursor: pointer; display: none;">
-            Continue to Feature
-        </button>
+        <h3>Loading Ad...</h3>
+        <p>Please wait while we load the advertisement.</p>
+        <p>After watching the ad, you'll be able to use this feature.</p>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -612,9 +627,6 @@
         const flashlightIndicator = document.getElementById('flashlightIndicator');
         const adRequiredButtons = document.querySelectorAll('.ad-required');
         const adLoadingOverlay = document.getElementById('adLoadingOverlay');
-        const adFrame = document.getElementById('adFrame');
-        const continueBtn = document.getElementById('continueBtn');
-        const adFrameContainer = document.getElementById('adFrameContainer');
 
         // App State
         let mediaStream = null;
@@ -624,11 +636,8 @@
         let isRunning = false;
         let lastAdShownTime = 0;
         const AD_INTERVAL = 5 * 60 * 1000; // 5 minutes in milliseconds
-        let currentAdAction = null;
-        
-        // Adsterra Configuration
-        const ADSTERRA_LINK = "https://wipehumorousbeen.com/nnj13hphjx?key=bf9d7106eeef221c1e9861bf2a06ceef";
-        const ADSTERRA_ID = "26099760";
+        let rewardedAdReady = false;
+        let interstitialAdReady = false;
 
         // Initialize Slick Slider
         $(document).ready(function () {
@@ -642,40 +651,88 @@
                 autoplaySpeed: 3000
             });
 
-            // Set up interval for showing interstitial ads
-            setInterval(checkAdInterval, 60000); // Check every minute
+            // Initialize ads
+            initAds();
         });
+
+        // Initialize AdMob ads
+        function initAds() {
+            try {
+                // Load banner ads
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                
+                // Initialize rewarded ads
+                initRewardedAds();
+                
+                // Initialize interstitial ads
+                initInterstitialAds();
+                
+                // Set up interval for showing interstitial ads
+                setInterval(checkAdInterval, 60000); // Check every minute
+            } catch (error) {
+                console.error('Ad initialization error:', error);
+            }
+        }
+
+        // Initialize rewarded ads
+        function initRewardedAds() {
+            // In a real implementation, you would use the AdMob SDK
+            // This is a simplified version for demonstration
+            rewardedAdReady = true;
+            console.log('Rewarded ads initialized');
+        }
+
+        // Initialize interstitial ads
+        function initInterstitialAds() {
+            // In a real implementation, you would use the AdMob SDK
+            // This is a simplified version for demonstration
+            interstitialAdReady = true;
+            console.log('Interstitial ads initialized');
+        }
 
         // Check if it's time to show an interstitial ad
         function checkAdInterval() {
             const currentTime = Date.now();
-            if (currentTime - lastAdShownTime >= AD_INTERVAL) {
+            if (currentTime - lastAdShownTime >= AD_INTERVAL && interstitialAdReady) {
                 showInterstitialAd();
                 lastAdShownTime = currentTime;
             }
         }
 
         // Show a rewarded ad and execute callback when completed
-        function showRewardedAd(actionCallback, buttonId) {
-            // Store the action to perform after ad
-            currentAdAction = { callback: actionCallback, buttonId: buttonId };
+        function showRewardedAd(actionCallback) {
+            if (!rewardedAdReady) {
+                actionCallback();
+                return;
+            }
             
             // Show loading overlay
             adLoadingOverlay.style.display = 'flex';
             
-            // Load Adsterra ad directly in the iframe
-            adFrame.src = ADSTERRA_LINK;
+            // In a real implementation, you would show the AdMob rewarded ad here
+            // For this demo, we'll simulate the ad experience
+            console.log('Showing rewarded ad...');
             
-            // Show continue button after a delay (simulating ad completion)
+            // Simulate ad loading and showing
             setTimeout(() => {
-                continueBtn.style.display = 'block';
-            }, 5000); // Show continue button after 15 seconds
+                console.log('User watched the rewarded ad');
+                
+                // Hide loading overlay
+                adLoadingOverlay.style.display = 'none';
+                
+                // Execute the callback
+                if (typeof actionCallback === 'function') {
+                    actionCallback();
+                }
+            }, 3000); // Simulate 3 second ad
         }
 
         // Show an interstitial ad
         function showInterstitialAd() {
-            // Open Adsterra ad in new tab
-            window.open(ADSTERRA_LINK, '_blank');
+            if (!interstitialAdReady) return;
+            
+            console.log('Showing interstitial ad...');
+            // In a real implementation, you would show the AdMob interstitial ad here
         }
 
         // Flashlight control with proper cleanup
@@ -804,59 +861,38 @@
             pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause (Watch Ad)';
         }
 
-        // Execute the action after ad is watched
-        function executeAdAction() {
-            if (!currentAdAction) return;
-            
-            const { callback, buttonId } = currentAdAction;
-            
-            switch(buttonId) {
-                case 'startBtn':
-                    startTimer();
-                    break;
-                case 'pauseBtn':
-                    togglePause();
-                    break;
-                case 'cancelBtn':
-                    cancelTimer();
-                    break;
-                default:
-                    // Handle preset buttons
-                    const button = document.querySelector(`[data-minutes="${buttonId}"]`);
-                    if (button && button.classList.contains('preset-btn')) {
-                        const minutes = parseInt(buttonId);
-                        hoursInput.value = Math.floor(minutes / 60);
-                        minutesInput.value = minutes % 60;
-                        secondsInput.value = 0;
-                        presetBtns.forEach(b => b.classList.remove('active'));
-                        button.classList.add('active');
-                    }
-                    break;
-            }
-            
-            // Reset ad state
-            currentAdAction = null;
-            adLoadingOverlay.style.display = 'none';
-            adFrame.src = '';
-            continueBtn.style.display = 'none';
-        }
-
         // Event listeners for buttons that require ads
         adRequiredButtons.forEach(button => {
             button.addEventListener('click', function() {
-                const buttonId = this.id || this.dataset.minutes;
+                const buttonId = this.id;
                 
-                // For preset buttons, we'll use the minutes value as ID
-                if (this.classList.contains('preset-btn')) {
-                    showRewardedAd(null, this.dataset.minutes);
-                } else {
-                    showRewardedAd(null, buttonId);
-                }
+                showRewardedAd(() => {
+                    // This callback executes after the ad is watched
+                    switch(buttonId) {
+                        case 'startBtn':
+                            startTimer();
+                            break;
+                        case 'pauseBtn':
+                            togglePause();
+                            break;
+                        case 'cancelBtn':
+                            cancelTimer();
+                            break;
+                        default:
+                            // Handle preset buttons
+                            if (this.classList.contains('preset-btn')) {
+                                const minutes = parseInt(this.dataset.minutes);
+                                hoursInput.value = Math.floor(minutes / 60);
+                                minutesInput.value = minutes % 60;
+                                secondsInput.value = 0;
+                                presetBtns.forEach(b => b.classList.remove('active'));
+                                this.classList.add('active');
+                            }
+                            break;
+                    }
+                });
             });
         });
-
-        // Continue button after ad
-        continueBtn.addEventListener('click', executeAdAction);
 
         // Input validation
         [hoursInput, minutesInput, secondsInput].forEach(input => {
