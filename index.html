@@ -287,7 +287,7 @@
         let isPaused = false;
         let isRunning = false;
 
-        // Flashlight control
+        // Flashlight control with proper cleanup
         async function toggleFlashlight(state) {
             try {
                 if (state) {
@@ -296,7 +296,9 @@
                     });
                     const track = stream.getVideoTracks()[0];
                     
-                    if (mediaStream) mediaStream.getTracks().forEach(t => t.stop());
+                    if (mediaStream) {
+                        mediaStream.getTracks().forEach(t => t.stop());
+                    }
                     
                     mediaStream = stream;
                     await track.applyConstraints({ advanced: [{ torch: true }] });
@@ -311,10 +313,11 @@
             } catch (error) {
                 console.error('Flashlight error:', error);
                 status.textContent = 'Flashlight unavailable';
+                flashlightIndicator.classList.remove('active');
             }
         }
 
-        // Timer functions
+        // Timer functions with proper state management
         function updateTimer() {
             if (!isPaused && remainingTime > 0) {
                 remainingTime -= 1000;
@@ -337,7 +340,10 @@
             
             remainingTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
             
-            if (remainingTime <= 0) return;
+            if (remainingTime <= 0) {
+                status.textContent = 'Please set a valid time';
+                return;
+            }
             
             clearInterval(timer);
             isRunning = true;
@@ -355,10 +361,18 @@
 
         function togglePause() {
             isPaused = !isPaused;
-            pauseBtn.innerHTML = isPaused ? 
-                '<i class="fas fa-play"></i> Resume' : 
-                '<i class="fas fa-pause"></i> Pause';
-            status.textContent = isPaused ? 'Timer paused' : 'Timer resumed';
+            
+            if (isPaused) {
+                toggleFlashlight(false);
+                status.textContent = 'Timer paused';
+                pauseBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
+            } else {
+                if (remainingTime > 0) {
+                    toggleFlashlight(true);
+                    status.textContent = 'Timer resumed';
+                    pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                }
+            }
         }
 
         function cancelTimer() {
@@ -370,6 +384,12 @@
             updateDisplay();
             resetControls();
             status.textContent = 'Timer cancelled';
+            
+            // Force cleanup
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
         }
 
         function updateDisplay() {
