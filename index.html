@@ -2,99 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SmartTorch Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SmartTorch Mobile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #007AFF;
-            --primary-dark: #0066CC;
             --danger: #FF3B30;
-            --danger-dark: #E60000;
             --warning: #FF9500;
-            --warning-dark: #F29400;
-            --success: #34C759;
-            --success-dark: #248A3D;
-            --dark: #1C1C1E;
-            --light: #FFFFFF;
-            --gray: #8E8E93;
-            --bg: #F2F2F7;
-            --card-bg: var(--light);
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --background: #FFFFFF;
+            --card-bg: #F2F2F7;
+            --text-primary: #1C1C1E;
+            --text-secondary: #636366;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow-x: hidden;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg);
-            color: var(--dark);
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            -webkit-font-smoothing: antialiased;
+            padding: 20px;
         }
 
-        .app-container {
+        .container {
+            max-width: 500px;
             width: 100%;
-            max-width: 420px;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            max-height: 800px;
-            background-color: var(--light);
-            border-radius: 24px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
+            margin: auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .header {
-            padding: 24px 16px 16px;
             text-align: center;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 32px;
         }
 
-        h1 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            color: var(--dark);
-        }
-
-        .subtitle {
-            color: var(--gray);
-            font-size: 14px;
-            font-weight: 400;
-        }
-
-        .content {
-            flex: 1;
-            padding: 24px 16px;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .flashlight-indicator {
+        .flashlight-icon {
             width: 80px;
             height: 80px;
-            background-color: var(--light);
-            border: 2px solid #E5E5EA;
-            border-radius: 50%;
+            background: var(--primary);
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -102,43 +63,41 @@
             transition: all 0.3s ease;
         }
 
-        .flashlight-indicator.active {
-            background-color: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 0 0 8px rgba(0, 122, 255, 0.15);
+        .flashlight-icon.active {
+            background: var(--warning);
+            box-shadow: 0 0 20px rgba(255,149,0,0.3);
         }
 
-        .flashlight-icon {
+        h1 {
             font-size: 28px;
-            color: var(--gray);
-            transition: all 0.3s ease;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
-        .flashlight-indicator.active .flashlight-icon {
-            color: white;
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
         }
 
         .time-presets {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 12px;
             margin-bottom: 24px;
         }
 
         .preset-btn {
-            background-color: var(--light);
+            background: var(--background);
             border: 1px solid #E5E5EA;
             border-radius: 12px;
-            padding: 12px;
-            font-size: 14px;
+            padding: 14px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
-            color: var(--dark);
         }
 
-        .preset-btn:hover, .preset-btn.active {
-            background-color: var(--primary);
+        .preset-btn.active {
+            background: var(--primary);
             color: white;
             border-color: var(--primary);
         }
@@ -146,24 +105,13 @@
         .time-inputs {
             display: flex;
             justify-content: space-between;
-            margin: 16px 0;
-            gap: 8px;
+            gap: 12px;
+            margin: 24px 0;
         }
 
         .time-column {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .time-column label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--gray);
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            text-align: center;
         }
 
         .time-input {
@@ -171,50 +119,54 @@
             padding: 16px;
             font-size: 20px;
             font-weight: 600;
-            text-align: center;
             border: 1px solid #E5E5EA;
             border-radius: 12px;
-            background-color: var(--light);
-            color: var(--dark);
-        }
-
-        .time-input:focus {
-            outline: none;
-            border-color: var(--primary);
+            background: var(--background);
+            margin-top: 8px;
         }
 
         .countdown {
             font-size: 48px;
             font-weight: 700;
-            font-family: 'Courier New', monospace;
-            margin: 16px 0;
-            color: var(--dark);
             text-align: center;
-            letter-spacing: 2px;
+            font-family: monospace;
+            margin: 24px 0;
+            color: var(--text-primary);
         }
 
-        .action-buttons {
+        .controls {
             display: flex;
             gap: 12px;
-            margin-top: auto;
-            padding: 16px;
-            background-color: var(--light);
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: 24px;
         }
 
         .btn {
             flex: 1;
             padding: 16px;
             border-radius: 12px;
-            font-size: 16px;
+            border: none;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
         }
 
         .btn:disabled {
@@ -222,272 +174,162 @@
             cursor: not-allowed;
         }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:active {
-            background-color: var(--primary-dark);
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .btn-danger:active {
-            background-color: var(--danger-dark);
-        }
-
-        .btn-warning {
-            background-color: var(--warning);
-            color: white;
-        }
-
-        .btn-warning:active {
-            background-color: var(--warning-dark);
-        }
-
         .status {
-            margin-top: 16px;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
             text-align: center;
+            margin-top: 24px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
         }
 
-        .status-info {
-            background-color: rgba(0, 122, 255, 0.1);
+        .status-active {
+            background: rgba(0,122,255,0.1);
             color: var(--primary);
         }
 
-        .status-success {
-            background-color: rgba(52, 199, 89, 0.1);
-            color: var(--success-dark);
+        .status-inactive {
+            background: rgba(116,116,128,0.1);
+            color: var(--text-secondary);
         }
 
-        .status-warning {
-            background-color: rgba(255, 149, 0, 0.1);
-            color: var(--warning-dark);
-        }
-
-        .status-error {
-            background-color: rgba(255, 59, 48, 0.1);
-            color: var(--danger-dark);
-        }
-
-        @media (max-width: 400px) {
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 12px;
+            }
+            
             .time-presets {
                 grid-template-columns: repeat(2, 1fr);
             }
             
             .time-input {
-                padding: 14px;
                 font-size: 18px;
+                padding: 14px;
             }
             
             .countdown {
                 font-size: 40px;
             }
             
-            .btn {
-                padding: 14px;
-                font-size: 15px;
+            .controls {
+                flex-direction: column;
             }
-        }
-
-        /* iOS-like touch feedback */
-        .btn:active, .preset-btn:active {
-            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="header">
-            <h1>SmartTorch Pro</h1>
-            <p class="subtitle">Set timer to automatically turn off flashlight</p>
-        </div>
-        
-        <div class="content">
-            <div class="flashlight-indicator" id="flashlightIndicator">
-                <i class="fas fa-lightbulb flashlight-icon"></i>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="flashlight-icon" id="flashlightIndicator">
+                    <i class="fas fa-lightbulb" style="font-size: 32px; color: white;"></i>
+                </div>
+                <h1>SmartTorch</h1>
+                <p class="subtitle">Set timer for automatic flashlight off</p>
             </div>
-            
+
             <div class="time-presets">
-                <button class="preset-btn" data-minutes="1">1 min</button>
-                <button class="preset-btn" data-minutes="5">5 min</button>
-                <button class="preset-btn" data-minutes="10">10 min</button>
-                <button class="preset-btn" data-minutes="15">15 min</button>
-                <button class="preset-btn" data-minutes="30">30 min</button>
-                <button class="preset-btn" data-minutes="60">1 hour</button>
+                <button class="preset-btn" data-minutes="1">1 Min</button>
+                <button class="preset-btn" data-minutes="5">5 Min</button>
+                <button class="preset-btn" data-minutes="10">10 Min</button>
+                <button class="preset-btn" data-minutes="15">15 Min</button>
+                <button class="preset-btn" data-minutes="30">30 Min</button>
+                <button class="preset-btn" data-minutes="60">60 Min</button>
             </div>
-            
+
             <div class="time-inputs">
                 <div class="time-column">
-                    <label>Hours</label>
                     <input type="number" id="hours" class="time-input" min="0" value="0" placeholder="00">
+                    <div class="time-label">Hours</div>
                 </div>
                 <div class="time-column">
-                    <label>Minutes</label>
                     <input type="number" id="minutes" class="time-input" min="0" max="59" value="0" placeholder="00">
+                    <div class="time-label">Minutes</div>
                 </div>
                 <div class="time-column">
-                    <label>Seconds</label>
                     <input type="number" id="seconds" class="time-input" min="0" max="59" value="0" placeholder="00">
+                    <div class="time-label">Seconds</div>
                 </div>
             </div>
-            
+
             <div class="countdown" id="countdown">00:00:00</div>
-            
-            <div class="status status-info" id="status">Ready to set timer</div>
-        </div>
-        
-        <div class="action-buttons">
-            <button id="cancelBtn" class="btn btn-danger" disabled>
-                <i class="fas fa-times"></i> Cancel
-            </button>
-            <button id="pauseBtn" class="btn btn-warning" disabled>
-                <i class="fas fa-pause"></i> Pause
-            </button>
-            <button id="startBtn" class="btn btn-primary">
-                <i class="fas fa-play"></i> Start
-            </button>
+
+            <div class="controls">
+                <button id="cancelBtn" class="btn btn-danger" disabled>
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button id="pauseBtn" class="btn btn-warning" disabled>
+                    <i class="fas fa-pause"></i> Pause
+                </button>
+                <button id="startBtn" class="btn btn-primary">
+                    <i class="fas fa-play"></i> Start
+                </button>
+            </div>
+
+            <div class="status status-inactive" id="status">Ready to start</div>
         </div>
     </div>
 
     <script>
-        // DOM Elements
         const hoursInput = document.getElementById('hours');
         const minutesInput = document.getElementById('minutes');
         const secondsInput = document.getElementById('seconds');
-        const countdownDisplay = document.getElementById('countdown');
+        const countdown = document.getElementById('countdown');
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const cancelBtn = document.getElementById('cancelBtn');
-        const statusDisplay = document.getElementById('status');
-        const presetButtons = document.querySelectorAll('.preset-btn');
+        const status = document.getElementById('status');
+        const presetBtns = document.querySelectorAll('.preset-btn');
         const flashlightIndicator = document.getElementById('flashlightIndicator');
 
-        // App State
         let mediaStream = null;
-        let timerInterval = null;
+        let timer = null;
         let remainingTime = 0;
         let isPaused = false;
-        let isFlashlightOn = false;
-        let isTimerRunning = false;
+        let isRunning = false;
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            checkFlashlightSupport();
-            setupEventListeners();
-        });
-
-        // Check flashlight support
-        async function checkFlashlightSupport() {
-            try {
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                const hasCamera = devices.some(device => device.kind === 'videoinput');
-                
-                if (!hasCamera) {
-                    updateStatus('No camera found - Flashlight may not work', 'error');
-                    return false;
-                }
-
-                return true;
-            } catch (error) {
-                console.error('Error checking flashlight:', error);
-                updateStatus('Error checking flashlight support', 'error');
-                return false;
-            }
-        }
-
-        // Toggle flashlight (with proper error handling)
+        // Flashlight control
         async function toggleFlashlight(state) {
             try {
                 if (state) {
-                    const constraints = {
-                        video: {
-                            facingMode: 'environment',
-                            advanced: [{ torch: true }]
-                        }
-                    };
-                    
-                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: 'environment', advanced: [{ torch: true }] }
+                    });
                     const track = stream.getVideoTracks()[0];
                     
-                    // Stop any existing stream
-                    if (mediaStream) {
-                        mediaStream.getTracks().forEach(t => t.stop());
-                    }
+                    if (mediaStream) mediaStream.getTracks().forEach(t => t.stop());
                     
                     mediaStream = stream;
-                    await track.applyConstraints({
-                        advanced: [{ torch: true }]
-                    });
-                    
-                    isFlashlightOn = true;
+                    await track.applyConstraints({ advanced: [{ torch: true }] });
                     flashlightIndicator.classList.add('active');
-                    updateStatus('Flashlight is ON', 'success');
                 } else {
-                    // Only turn off if we have control of the flashlight
                     if (mediaStream) {
-                        mediaStream.getTracks().forEach(track => track.stop());
+                        mediaStream.getTracks().forEach(t => t.stop());
                         mediaStream = null;
                     }
-                    
-                    isFlashlightOn = false;
                     flashlightIndicator.classList.remove('active');
-                    updateStatus('Flashlight is OFF', 'info');
                 }
             } catch (error) {
                 console.error('Flashlight error:', error);
-                updateStatus('Failed to access flashlight', 'error');
-                isFlashlightOn = false;
-                flashlightIndicator.classList.remove('active');
+                status.textContent = 'Flashlight unavailable';
             }
         }
 
-        // Update countdown display
-        function updateCountdownDisplay() {
-            const hours = Math.floor(remainingTime / 3600000);
-            const minutes = Math.floor((remainingTime % 3600000) / 60000);
-            const seconds = Math.floor((remainingTime % 60000) / 1000);
-            
-            countdownDisplay.textContent = 
-                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            
-            // Visual feedback when time is running low
-            if (remainingTime <= 10000 && remainingTime > 0) { // 10 seconds or less
-                countdownDisplay.style.color = 'var(--danger)';
-            } else {
-                countdownDisplay.style.color = 'var(--dark)';
-            }
-        }
-
-        // Timer function
+        // Timer functions
         function updateTimer() {
-            if (!isPaused) {
+            if (!isPaused && remainingTime > 0) {
                 remainingTime -= 1000;
+                updateDisplay();
                 
                 if (remainingTime <= 0) {
-                    clearInterval(timerInterval);
-                    remainingTime = 0;
-                    isTimerRunning = false;
-                    toggleFlashlight(false); // Ensure flashlight turns off
-                    updateCountdownDisplay();
-                    updateStatus('Timer completed', 'success');
+                    clearInterval(timer);
+                    isRunning = false;
+                    toggleFlashlight(false);
+                    status.textContent = 'Timer completed';
                     resetControls();
-                    return;
                 }
-                
-                updateCountdownDisplay();
             }
         }
 
-        // Start timer
         function startTimer() {
             const hours = parseInt(hoursInput.value) || 0;
             const minutes = parseInt(minutesInput.value) || 0;
@@ -495,53 +337,52 @@
             
             remainingTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
             
-            if (remainingTime <= 0) {
-                updateStatus('Please set a valid time', 'error');
-                return;
-            }
+            if (remainingTime <= 0) return;
             
-            clearInterval(timerInterval);
+            clearInterval(timer);
+            isRunning = true;
             isPaused = false;
-            isTimerRunning = true;
             
             toggleFlashlight(true);
-            timerInterval = setInterval(updateTimer, 1000);
-            updateCountdownDisplay();
-            updateStatus('Timer running', 'success');
+            timer = setInterval(updateTimer, 1000);
+            updateDisplay();
             
-            // Update button states
             startBtn.disabled = true;
             pauseBtn.disabled = false;
             cancelBtn.disabled = false;
-            pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+            status.textContent = 'Timer running';
         }
 
-        // Pause/resume timer
         function togglePause() {
             isPaused = !isPaused;
-            
-            if (isPaused) {
-                updateStatus('Timer paused', 'warning');
-                pauseBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
-            } else {
-                updateStatus('Timer resumed', 'success');
-                pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
-            }
+            pauseBtn.innerHTML = isPaused ? 
+                '<i class="fas fa-play"></i> Resume' : 
+                '<i class="fas fa-pause"></i> Pause';
+            status.textContent = isPaused ? 'Timer paused' : 'Timer resumed';
         }
 
-        // Cancel timer
         function cancelTimer() {
-            clearInterval(timerInterval);
+            clearInterval(timer);
             remainingTime = 0;
+            isRunning = false;
             isPaused = false;
-            isTimerRunning = false;
-            toggleFlashlight(false); // Ensure flashlight turns off
-            updateCountdownDisplay();
-            updateStatus('Timer cancelled', 'info');
+            toggleFlashlight(false);
+            updateDisplay();
             resetControls();
+            status.textContent = 'Timer cancelled';
         }
 
-        // Reset controls to initial state
+        function updateDisplay() {
+            const hours = Math.floor(remainingTime / 3600000);
+            const minutes = Math.floor((remainingTime % 3600000) / 60000);
+            const seconds = Math.floor((remainingTime % 60000) / 1000);
+            
+            countdown.textContent = 
+                `${String(hours).padStart(2, '0')}:
+                 ${String(minutes).padStart(2, '0')}:
+                 ${String(seconds).padStart(2, '0')}`;
+        }
+
         function resetControls() {
             startBtn.disabled = false;
             pauseBtn.disabled = true;
@@ -549,61 +390,32 @@
             pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
         }
 
-        // Update status display
-        function updateStatus(message, type = 'info') {
-            statusDisplay.textContent = message;
-            statusDisplay.className = `status status-${type}`;
-        }
+        // Event listeners
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', togglePause);
+        cancelBtn.addEventListener('click', cancelTimer);
 
-        // Set time from preset
-        function setPresetTime(minutes) {
-            hoursInput.value = '0';
-            minutesInput.value = minutes;
-            secondsInput.value = '0';
-            updateStatus(`Preset ${minutes} min selected`, 'info');
-            
-            // Highlight selected preset
-            presetButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (parseInt(btn.dataset.minutes) === minutes) {
-                    btn.classList.add('active');
-                }
+        presetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const minutes = parseInt(btn.dataset.minutes);
+                hoursInput.value = Math.floor(minutes / 60);
+                minutesInput.value = minutes % 60;
+                secondsInput.value = 0;
+                presetBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
             });
-        }
+        });
 
-        // Setup event listeners
-        function setupEventListeners() {
-            startBtn.addEventListener('click', startTimer);
-            pauseBtn.addEventListener('click', togglePause);
-            cancelBtn.addEventListener('click', cancelTimer);
-            
-            // Preset buttons
-            presetButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    setPresetTime(parseInt(btn.dataset.minutes));
-                });
-            });
-            
-            // Input validation
-            [hoursInput, minutesInput, secondsInput].forEach(input => {
-                input.addEventListener('change', () => {
-                    if (input.value < 0) input.value = 0;
-                    if (input.id === 'minutes' || input.id === 'seconds') {
-                        if (input.value > 59) input.value = 59;
-                    }
-                    
-                    // Clear preset selection when manually entering time
-                    presetButtons.forEach(btn => btn.classList.remove('active'));
-                });
-            });
-            
-            // Visual feedback for flashlight toggle
-            flashlightIndicator.addEventListener('click', () => {
-                if (!isTimerRunning) {
-                    toggleFlashlight(!isFlashlightOn);
+        // Input validation
+        [hoursInput, minutesInput, secondsInput].forEach(input => {
+            input.addEventListener('input', () => {
+                if (input.value < 0) input.value = 0;
+                if (input === minutesInput || input === secondsInput) {
+                    if (input.value > 59) input.value = 59;
                 }
+                presetBtns.forEach(b => b.classList.remove('active'));
             });
-        }
+        });
     </script>
 </body>
 </html>
