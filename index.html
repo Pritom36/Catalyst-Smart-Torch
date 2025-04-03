@@ -3,748 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Flashlight Pro</title>
-    <meta name="theme-color" content="#202124">
+    <title>Smart Flashlight</title>
     <style>
-        :root {
-            --primary: #4285f4;
-            --danger: #ea4335;
-            --success: #34a853;
-            --warning: #fbbc05;
-            --dark: #202124;
-            --light: #f8f9fa;
-            --gray: #9aa0a6;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--dark);
-            color: var(--light);
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
+            align-items: center;
             padding: 20px;
-            line-height: 1.6;
+            background-color: #f0f0f0;
         }
-
-        header {
+        .control-panel {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        .subtitle {
-            color: var(--gray);
-            font-size: 1rem;
-        }
-
-        .container {
-            max-width: 800px;
+            margin-top: 50px;
+            max-width: 400px;
             width: 100%;
-            margin: 0 auto;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
         }
-
-        .card {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-title i {
-            font-size: 1.5rem;
-        }
-
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
         button {
-            padding: 0.75rem 1.5rem;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
             border: none;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            flex: 1;
-            min-width: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .btn-success {
-            background-color: var(--success);
-            color: white;
-        }
-
-        .btn-warning {
-            background-color: var(--warning);
-            color: var(--dark);
-        }
-
-        .btn-light {
-            background-color: var(--light);
-            color: var(--dark);
-        }
-
-        .input-group {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            align-items: center;
-        }
-
-        input, select {
-            padding: 0.75rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--light);
-            font-size: 1rem;
-            flex: 1;
-        }
-
-        input[type="range"] {
-            padding: 0;
-            height: 8px;
-            -webkit-appearance: none;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .progress-container {
-            margin: 1rem 0;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
-            overflow: hidden;
+            cursor: pointer;
+            transition: 0.3s;
         }
-
-        .progress {
-            height: 100%;
-            background-color: var(--primary);
-            width: 0%;
-            transition: width 0.3s ease;
+        #turnOn {
+            background-color: #4CAF50;
+            color: white;
         }
-
-        .status {
-            margin-top: 1rem;
-            padding: 0.75rem;
-            border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.05);
-            font-size: 0.9rem;
+        #turnOff {
+            background-color: #f44336;
+            color: white;
         }
-
-        .status.error {
-            background-color: rgba(234, 67, 53, 0.2);
-            color: var(--danger);
-        }
-
-        .status.success {
-            background-color: rgba(52, 168, 83, 0.2);
-            color: var(--success);
-        }
-
-        .status.warning {
-            background-color: rgba(251, 188, 5, 0.2);
-            color: var(--warning);
-        }
-
-        .battery-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .battery-level {
-            height: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            flex: 1;
-        }
-
-        .battery-fill {
-            height: 100%;
-            background-color: var(--success);
-            width: 100%;
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-
-        footer {
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 100px;
             text-align: center;
-            margin-top: 2rem;
-            color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 16px;
         }
-
-        @media (max-width: 600px) {
-            .button-group {
-                flex-direction: column;
-            }
-            
-            .input-group {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            button {
-                width: 100%;
-            }
-        }
-
-        /* Icons */
-        .material-icons {
-            font-family: 'Material Icons';
-            font-weight: normal;
-            font-style: normal;
+        .timer {
             font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
+            margin: 20px;
+        }
+        #status {
+            color: #666;
+            margin: 10px;
+            min-height: 20px;
+        }
+        .error {
+            color: red;
         }
     </style>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Smart Flashlight Pro</h1>
-        <p class="subtitle">Complete control over your device's flashlight</p>
-    </header>
-
-    <div class="container">
-        <!-- Flashlight Control Section -->
-        <div class="card">
-            <h2 class="card-title">
-                <i class="material-icons">highlight</i>
-                Flashlight Control
-            </h2>
-            <div class="button-group">
-                <button id="turnOn" class="btn-success">
-                    <i class="material-icons">power_settings_new</i>
-                    Turn On
-                </button>
-                <button id="turnOff" class="btn-danger" disabled>
-                    <i class="material-icons">power_off</i>
-                    Turn Off
-                </button>
-            </div>
-            
-            <div class="input-group">
-                <label for="brightness">Brightness:</label>
-                <input type="range" id="brightness" min="0.1" max="1" step="0.1" value="1">
-                <span id="brightnessValue">100%</span>
-            </div>
-            
-            <div class="status" id="flashlightStatus">
-                Flashlight is ready
-            </div>
+    <div class="control-panel">
+        <h1>Smart Flashlight</h1>
+        <div id="status">Loading...</div>
+        
+        <div>
+            <button id="turnOn" disabled>Turn On</button>
+            <button id="turnOff" disabled>Turn Off</button>
         </div>
 
-        <!-- Timer Section -->
-        <div class="card">
-            <h2 class="card-title">
-                <i class="material-icons">timer</i>
-                Advanced Timer
-            </h2>
-            <div class="input-group">
-                <input type="number" id="timerMinutes" min="1" value="5" placeholder="Minutes">
-                <select id="timerType">
-                    <option value="single">Single</option>
-                    <option value="recurring">Recurring</option>
-                </select>
-            </div>
-            
-            <div class="button-group">
-                <button id="startTimer" class="btn-primary">
-                    <i class="material-icons">play_arrow</i>
-                    Start Timer
-                </button>
-                <button id="stopTimer" class="btn-danger" disabled>
-                    <i class="material-icons">stop</i>
-                    Stop Timer
-                </button>
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress" id="timerProgress"></div>
-                </div>
-                <div id="timerDisplay">00:00</div>
-            </div>
+        <div>
+            <input type="number" id="minutes" min="1" value="5" placeholder="Minutes">
+            <button id="startTimer" disabled>Start Timer</button>
         </div>
 
-        <!-- Alarm Section -->
-        <div class="card">
-            <h2 class="card-title">
-                <i class="material-icons">alarm</i>
-                Alarm System
-            </h2>
-            <div class="input-group">
-                <input type="time" id="alarmTime">
-                <button id="setAlarm" class="btn-primary">
-                    <i class="material-icons">alarm_add</i>
-                    Set Alarm
-                </button>
-            </div>
-            
-            <div class="button-group">
-                <button id="stopAlarm" class="btn-danger" disabled>
-                    <i class="material-icons">alarm_off</i>
-                    Stop Alarm
-                </button>
-                <button id="testAlarm" class="btn-warning">
-                    <i class="material-icons">notifications_active</i>
-                    Test Alarm
-                </button>
-            </div>
-            
-            <div class="status" id="alarmStatus">
-                No alarm set
-            </div>
-        </div>
-
-        <!-- Device Optimization -->
-        <div class="card">
-            <h2 class="card-title">
-                <i class="material-icons">build</i>
-                Device Optimization
-            </h2>
-            <div class="button-group">
-                <button id="optimizeDevice" class="btn-light">
-                    <i class="material-icons">auto_fix_high</i>
-                    Optimize Now
-                </button>
-                <button id="batterySaver" class="btn-warning">
-                    <i class="material-icons">battery_alert</i>
-                    Battery Saver
-                </button>
-            </div>
-            
-            <div class="battery-status">
-                <i class="material-icons">battery_full</i>
-                <div class="battery-level">
-                    <div class="battery-fill" id="batteryFill"></div>
-                </div>
-                <span id="batteryPercent">100%</span>
-            </div>
-            
-            <div class="status" id="optimizationStatus">
-                Device status: Normal
-            </div>
-        </div>
+        <div class="timer" id="countdown">00:00</div>
     </div>
 
-    <footer>
-        <p>Smart Flashlight Pro &copy; 2023 | Works best on Chrome for Android</p>
-    </footer>
-
     <script>
-        // DOM Elements
-        const turnOnBtn = document.getElementById('turnOn');
-        const turnOffBtn = document.getElementById('turnOff');
-        const brightnessSlider = document.getElementById('brightness');
-        const brightnessValue = document.getElementById('brightnessValue');
-        const flashlightStatus = document.getElementById('flashlightStatus');
-        const startTimerBtn = document.getElementById('startTimer');
-        const stopTimerBtn = document.getElementById('stopTimer');
-        const timerMinutes = document.getElementById('timerMinutes');
-        const timerType = document.getElementById('timerType');
-        const timerProgress = document.getElementById('timerProgress');
-        const timerDisplay = document.getElementById('timerDisplay');
-        const setAlarmBtn = document.getElementById('setAlarm');
-        const stopAlarmBtn = document.getElementById('stopAlarm');
-        const testAlarmBtn = document.getElementById('testAlarm');
-        const alarmTime = document.getElementById('alarmTime');
-        const alarmStatus = document.getElementById('alarmStatus');
-        const optimizeDeviceBtn = document.getElementById('optimizeDevice');
-        const batterySaverBtn = document.getElementById('batterySaver');
-        const batteryFill = document.getElementById('batteryFill');
-        const batteryPercent = document.getElementById('batteryPercent');
-        const optimizationStatus = document.getElementById('optimizationStatus');
-
-        // App State
         let mediaStream = null;
         let timerInterval = null;
-        let alarmInterval = null;
         let endTime = null;
-        let isFlashlightOn = false;
-        let currentBrightness = 1;
-        let batteryLevel = 1;
-        let isBatterySaver = false;
+        let isFlashlightAvailable = false;
 
-        // Alarm Sound (base64 encoded short beep)
-        const alarmSound = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...');
-
-        // Initialize Battery Status
-        function initBattery() {
-            if ('getBattery' in navigator) {
-                navigator.getBattery().then(battery => {
-                    updateBatteryStatus(battery);
-                    
-                    battery.addEventListener('levelchange', () => {
-                        updateBatteryStatus(battery);
-                    });
-                    
-                    battery.addEventListener('chargingchange', () => {
-                        updateBatteryStatus(battery);
-                    });
-                });
-            } else {
-                batteryPercent.textContent = 'N/A';
-                optimizationStatus.textContent = 'Battery API not supported';
-                optimizationStatus.className = 'status error';
-            }
-        }
-
-        function updateBatteryStatus(battery) {
-            batteryLevel = battery.level;
-            const percent = Math.round(battery.level * 100);
-            batteryPercent.textContent = `${percent}%`;
-            batteryFill.style.width = `${percent}%`;
-            
-            if (battery.charging) {
-                batteryFill.style.backgroundColor = 'var(--success)';
-                optimizationStatus.textContent = 'Charging - Full power available';
-                optimizationStatus.className = 'status success';
-            } else if (battery.level < 0.2) {
-                batteryFill.style.backgroundColor = 'var(--danger)';
-                optimizationStatus.textContent = 'Low battery - Features limited';
-                optimizationStatus.className = 'status error';
-                if (isFlashlightOn && isBatterySaver) {
-                    toggleFlashlight(false);
-                    showNotification('Battery Saver turned off flashlight');
-                }
-            } else if (battery.level < 0.5) {
-                batteryFill.style.backgroundColor = 'var(--warning)';
-                optimizationStatus.textContent = 'Battery moderate - Use wisely';
-                optimizationStatus.className = 'status warning';
-            } else {
-                batteryFill.style.backgroundColor = 'var(--success)';
-                optimizationStatus.textContent = 'Battery status: Good';
-                optimizationStatus.className = 'status success';
-            }
-        }
-
-        // Flashlight Control
-        async function toggleFlashlight(state) {
+        // Check flashlight support
+        async function checkFlashlightSupport() {
             try {
-                if (state) {
-                    if (batteryLevel < 0.2 && isBatterySaver) {
-                        showNotification('Battery too low for flashlight', 'error');
-                        return;
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const hasCamera = devices.some(device => device.kind === 'videoinput');
+                
+                if (!hasCamera) {
+                    updateStatus('No camera found', true);
+                    return false;
+                }
+
+                // Test flashlight capability
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'environment'
                     }
-                    
-                    const constraints = {
+                });
+                
+                const track = stream.getVideoTracks()[0];
+                const capabilities = track.getCapabilities();
+                isFlashlightAvailable = 'torch' in capabilities;
+                
+                track.stop();
+                
+                if (!isFlashlightAvailable) {
+                    updateStatus('Flashlight not supported on this device', true);
+                    return false;
+                }
+                
+                updateStatus('Ready to use');
+                enableControls();
+                return true;
+            } catch (error) {
+                console.error('Error checking flashlight:', error);
+                updateStatus(`Error: ${error.message}`, true);
+                return false;
+            }
+        }
+
+        async function toggleFlashlight(state) {
+            if (!isFlashlightAvailable) return;
+            
+            try {
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(track => track.stop());
+                    mediaStream = null;
+                }
+
+                if (state) {
+                    const stream = await navigator.mediaDevices.getUserMedia({
                         video: {
                             facingMode: 'environment',
-                            advanced: [{ torch: true, brightness: currentBrightness }]
+                            advanced: [{ torch: true }]
                         }
-                    };
-                    
-                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                    const track = stream.getVideoTracks()[0];
-                    
-                    if (mediaStream) {
-                        mediaStream.getTracks().forEach(t => t.stop());
-                    }
-                    
-                    mediaStream = stream;
-                    await track.applyConstraints({
-                        advanced: [{ torch: true, brightness: currentBrightness }]
                     });
                     
-                    isFlashlightOn = true;
-                    turnOnBtn.disabled = true;
-                    turnOffBtn.disabled = false;
-                    flashlightStatus.textContent = 'Flashlight is ON';
-                    flashlightStatus.className = 'status success';
-                } else {
-                    if (mediaStream) {
-                        mediaStream.getTracks().forEach(track => track.stop());
-                        mediaStream = null;
-                    }
+                    const track = stream.getVideoTracks()[0];
+                    await track.applyConstraints({
+                        advanced: [{ torch: true }]
+                    });
                     
-                    isFlashlightOn = false;
-                    turnOnBtn.disabled = false;
-                    turnOffBtn.disabled = true;
-                    flashlightStatus.textContent = 'Flashlight is OFF';
-                    flashlightStatus.className = 'status';
+                    mediaStream = stream;
+                    updateStatus('Flashlight is ON');
+                } else {
+                    updateStatus('Flashlight is OFF');
                 }
             } catch (error) {
-                console.error('Flashlight error:', error);
-                flashlightStatus.textContent = `Error: ${error.message}`;
-                flashlightStatus.className = 'status error';
-                isFlashlightOn = false;
-                turnOnBtn.disabled = false;
-                turnOffBtn.disabled = true;
+                console.error('Error toggling flashlight:', error);
+                updateStatus(`Error: ${error.message}`, true);
             }
         }
 
-        // Brightness Control
-        brightnessSlider.addEventListener('input', (e) => {
-            currentBrightness = parseFloat(e.target.value);
-            brightnessValue.textContent = `${Math.round(currentBrightness * 100)}%`;
-            
-            if (isFlashlightOn) {
-                const track = mediaStream.getVideoTracks()[0];
-                track.applyConstraints({
-                    advanced: [{ torch: true, brightness: currentBrightness }]
-                }).catch(err => {
-                    console.error('Brightness adjustment failed:', err);
-                });
-            }
-        });
-
-        // Timer System
-        function startTimer() {
-            const minutes = parseInt(timerMinutes.value);
-            const isRecurring = timerType.value === 'recurring';
-            
-            if (isNaN(minutes) || minutes < 1) {
-                showNotification('Please enter valid minutes', 'error');
-                return;
-            }
-            
-            let timeLeft = minutes * 60;
-            const totalTime = timeLeft;
-            
-            toggleFlashlight(true);
-            startTimerBtn.disabled = true;
-            stopTimerBtn.disabled = false;
-            
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                const progress = ((totalTime - timeLeft) / totalTime) * 100;
-                timerProgress.style.width = `${progress}%`;
-                
-                // Update timer display
-                const displayMinutes = Math.floor(timeLeft / 60);
-                const displaySeconds = timeLeft % 60;
-                timerDisplay.textContent = 
-                    `${displayMinutes.toString().padStart(2, '0')}:${displaySeconds.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    if (isRecurring) {
-                        timeLeft = minutes * 60;
-                        toggleFlashlight(true);
-                    } else {
-                        clearInterval(timerInterval);
-                        toggleFlashlight(false);
-                        startTimerBtn.disabled = false;
-                        stopTimerBtn.disabled = true;
-                        timerDisplay.textContent = '00:00';
-                    }
-                }
-            }, 1000);
-        }
-
-        function stopTimer() {
-            clearInterval(timerInterval);
-            toggleFlashlight(false);
-            startTimerBtn.disabled = false;
-            stopTimerBtn.disabled = true;
-            timerProgress.style.width = '0%';
-            timerDisplay.textContent = '00:00';
-        }
-
-        // Alarm System
-        function setAlarm() {
-            const alarmTimeValue = alarmTime.value;
-            if (!alarmTimeValue) {
-                showNotification('Please set alarm time', 'error');
-                return;
-            }
-            
-            const [hours, minutes] = alarmTimeValue.split(':').map(Number);
-            const now = new Date();
-            const alarmDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
-            
-            if (alarmDate < now) {
-                alarmDate.setDate(alarmDate.getDate() + 1);
-            }
-            
-            const timeUntilAlarm = alarmDate - now;
-            
-            alarmInterval = setInterval(() => {
-                const currentTime = new Date();
-                if (currentTime >= alarmDate) {
-                    triggerAlarm();
-                    clearInterval(alarmInterval);
-                }
-            }, 1000);
-            
-            setAlarmBtn.disabled = true;
-            stopAlarmBtn.disabled = false;
-            alarmStatus.textContent = `Alarm set for ${alarmTimeValue}`;
-            alarmStatus.className = 'status success';
-        }
-
-        function triggerAlarm() {
-            toggleFlashlight(true);
-            alarmSound.play();
-            
-            // Flashlight strobe effect for alarm
-            let strobeCount = 0;
-            const strobeInterval = setInterval(() => {
-                toggleFlashlight(!isFlashlightOn);
-                strobeCount++;
-                
-                if (strobeCount >= 10) {
-                    clearInterval(strobeInterval);
-                    stopAlarm();
-                }
-            }, 500);
-        }
-
-        function stopAlarm() {
-            clearInterval(alarmInterval);
-            alarmSound.pause();
-            alarmSound.currentTime = 0;
-            toggleFlashlight(false);
-            setAlarmBtn.disabled = false;
-            stopAlarmBtn.disabled = true;
-            alarmStatus.textContent = 'Alarm stopped';
-            alarmStatus.className = 'status';
-        }
-
-        function testAlarm() {
-            triggerAlarm();
-            stopAlarmBtn.disabled = false;
-            alarmStatus.textContent = 'Testing alarm...';
-            alarmStatus.className = 'status warning';
-        }
-
-        // Device Optimization
-        function optimizeDevice() {
-            // Stop all active features
-            if (isFlashlightOn) toggleFlashlight(false);
-            stopTimer();
-            stopAlarm();
-            
-            // Clean up resources
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(track => track.stop());
-                mediaStream = null;
-            }
-            
-            // Clear notifications
-            showNotification('Device optimized - Resources freed', 'success');
-            optimizationStatus.textContent = 'Device optimized - Ready';
-            optimizationStatus.className = 'status success';
-        }
-
-        function toggleBatterySaver() {
-            isBatterySaver = !isBatterySaver;
-            if (isBatterySaver) {
-                batterySaverBtn.innerHTML = '<i class="material-icons">battery_saver</i> Battery Saver ON';
-                batterySaverBtn.className = 'btn-success';
-                showNotification('Battery Saver enabled - Features may be limited', 'success');
-            } else {
-                batterySaverBtn.innerHTML = '<i class="material-icons">battery_alert</i> Battery Saver';
-                batterySaverBtn.className = 'btn-warning';
-                showNotification('Battery Saver disabled - Full features available', 'success');
-            }
-        }
-
-        // Helper Functions
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `status ${type}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }
-
-        // Event Listeners
-        turnOnBtn.addEventListener('click', () => toggleFlashlight(true));
-        turnOffBtn.addEventListener('click', () => toggleFlashlight(false));
-        startTimerBtn.addEventListener('click', startTimer);
-        stopTimerBtn.addEventListener('click', stopTimer);
-        setAlarmBtn.addEventListener('click', setAlarm);
-        stopAlarmBtn.addEventListener('click', stopAlarm);
-        testAlarmBtn.addEventListener('click', testAlarm);
-        optimizeDeviceBtn.addEventListener('click', optimizeDevice);
-        batterySaverBtn.addEventListener('click', toggleBatterySaver);
-
-        // Page Visibility API
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && isFlashlightOn) {
+        function updateTimer() {
+            const remaining = endTime - Date.now();
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('countdown').textContent = '00:00';
                 toggleFlashlight(false);
-                showNotification('Flashlight paused - App in background', 'warning');
+                return;
             }
-        });
+
+            const minutes = Math.floor(remaining / 60000);
+            const seconds = Math.floor((remaining % 60000) / 1000);
+            document.getElementById('countdown').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function updateStatus(message, isError = false) {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = message;
+            statusElement.className = isError ? 'error' : '';
+        }
+
+        function enableControls() {
+            document.getElementById('turnOn').disabled = false;
+            document.getElementById('turnOff').disabled = false;
+            document.getElementById('startTimer').disabled = false;
+        }
 
         // Initialize
-        initBattery();
+        document.getElementById('turnOn').addEventListener('click', () => {
+            toggleFlashlight(true);
+        });
+
+        document.getElementById('turnOff').addEventListener('click', () => {
+            toggleFlashlight(false);
+            clearInterval(timerInterval);
+            document.getElementById('countdown').textContent = '00:00';
+        });
+
+        document.getElementById('startTimer').addEventListener('click', () => {
+            const minutes = parseInt(document.getElementById('minutes').value);
+            if (minutes < 1) return;
+
+            toggleFlashlight(true);
+            endTime = Date.now() + (minutes * 60000);
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        });
+
+        // Check support on load
+        checkFlashlightSupport();
     </script>
 </body>
 </html>
