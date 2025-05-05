@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalyst Brac University</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"
+        async></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="js/themes.css">
+</head>
+
+<body>
+    <!-- Navigation bar -->
+    <div class="navbar">
+        <div class="nav-item" onclick="location.href='../index.html'">Home</div>
+        <div class="dropdown">
+            <div class="nav-item">Theme</div>
+            <div class="dropdown-content">
+                <a href="#" onclick="setTheme(1)">Theme 1</a>
+                <a href="#" onclick="setTheme(2)">Theme 2</a>
+                <a href="#" onclick="setTheme(3)">Theme 3</a>
+                <a href="#" onclick="setTheme(4)">Theme 4</a>
+            </div>
+        </div>
+    </div>
+
+    <h1>Catalyst Brac University Model Question Book</h1>
+    <h2 align="center">Model Question - 4</h2>
+
+
+
+
+
+
+
+
+
+<footer align="center">
+    <p>© 2023 All rights reserved.</p>
+</footer>
+<script src="js/themes.js"></script>
+<script src="js/protection.js"></script>
+
+</body>
+</html>

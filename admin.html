@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Catalyst BRACU</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .admin-section {
+            padding: 120px 0 60px;
+        }
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .admin-tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .admin-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            background: #f5f5f5;
+        }
+        .admin-tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        .admin-content {
+            margin-top: 30px;
+        }
+        .subscription-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .subscription-list th,
+        .subscription-list td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .subscription-list th {
+            background: #f5f5f5;
+            font-weight: 500;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Admin <span>Dashboard</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#" onclick="logout()">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="admin-section">
+        <div class="admin-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="totalSubscriptions">0</h3>
+                    <p>Total Subscriptions</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="activeSubscriptions">0</h3>
+                    <p>Active Subscriptions</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="expiredSubscriptions">0</h3>
+                    <p>Expired Subscriptions</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="monthlyRevenue">৳0</h3>
+                    <p>Monthly Revenue</p>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <div class="admin-tab active" onclick="showTab('subscriptions')">Subscriptions</div>
+                <div class="admin-tab" onclick="showTab('create')">Create Subscription</div>
+            </div>
+
+            <div class="admin-content">
+                <div id="subscriptions-tab">
+                    <table class="subscription-list">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Subscription Type</th>
+                                <th>Start Date</th>
+                                <th>Expiry Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subscriptionsList">
+                            <!-- Will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="create-tab" style="display: none;">
+                    <form id="createSubscriptionForm" class="form-group">
+                        <div class="form-group">
+                            <label>Subscription Type</label>
+                            <select id="subscriptionType" required>
+                                <option value="1-month">1 Month</option>
+                                <option value="3-month">3 Months</option>
+                                <option value="6-year">6 Years</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn primary">Generate Credentials</button>
+                    </form>
+
+                    <div id="generatedCredentials" style="display: none;">
+                        <h3>Generated Credentials</h3>
+                        <div class="credentials-box">
+                            <p><strong>Username:</strong> <span id="genUsername"></span></p>
+                            <p><strong>PIN:</strong> <span id="genPin"></span></p>
+                        </div>
+                        <button class="btn secondary" onclick="copyCredentials()">Copy to Clipboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/subscription.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        // Check admin authentication
+        function checkAuth() {
+            // In a real application, this would verify admin credentials
+            // For demo purposes, we'll use a simple check
+            if (!localStorage.getItem('adminAuth')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Initialize admin dashboard
+        async function initDashboard() {
+            const result = await AdminSystem.listSubscriptions();
+            if (result.success) {
+                updateStats(result.users);
+                renderSubscriptions(result.users);
+            }
+        }
+
+        // Update dashboard statistics
+        function updateStats(users) {
+            const now = new Date();
+            const active = users.filter(u => new Date(u.expiry_date) > now);
+            const expired = users.filter(u => new Date(u.expiry_date) <= now);
+            
+            document.getElementById('totalSubscriptions').textContent = users.length;
+            document.getElementById('activeSubscriptions').textContent = active.length;
+            document.getElementById('expiredSubscriptions').textContent = expired.length;
+            
+            // Calculate monthly revenue (simplified)
+            const monthlyRevenue = active.reduce((sum, user) => {
+                const prices = {
+                    '1-month': 499,
+                    '3-month': 1299 / 3,
+                    '6-year': 4999 / 72
+                };
+                return sum + prices[user.subscription_type];
+            }, 0);
+            
+            document.getElementById('monthlyRevenue').textContent = '৳' + Math.round(monthlyRevenue);
+        }
+
+        // Render subscriptions table
+        function renderSubscriptions(users) {
+            const tbody = document.getElementById('subscriptionsList');
+            tbody.innerHTML = '';
+            
+            users.forEach(user => {
+                const tr = document.createElement('tr');
+                const now = new Date();
+                const isActive = new Date(user.expiry_date) > now;
+                
+                tr.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${user.subscription_type}</td>
+                    <td>${new Date(user.start_date).toLocaleDateString()}</td>
+                    <td>${new Date(user.expiry_date).toLocaleDateString()}</td>
+                    <td><span class="status-badge ${isActive ? 'active' : 'expired'}">
+                        ${isActive ? 'Active' : 'Expired'}
+                    </span></td>
+                    <td class="action-buttons">
+                        <button class="btn secondary btn-small" onclick="extendSubscription('${user.username}')">
+                            Extend
+                        </button>
+                        <button class="btn primary btn-small" onclick="cancelSubscription('${user.username}')">
+                            Cancel
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Switch between tabs
+        function showTab(tabId) {
+            document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.admin-content > div').forEach(content => content.style.display = 'none');
+            
+            event.target.classList.add('active');
+            document.getElementById(`${tabId}-tab`).style.display = 'block';
+        }
+
+        // Handle subscription form submission
+        document.getElementById('createSubscriptionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const type = document.getElementById('subscriptionType').value;
+            const credentials = AdminSystem.generateCredentials();
+            
+            const result = await AdminSystem.createSubscription(
+                credentials.username,
+                credentials.pin,
+                type
+            );
+            
+            if (result.success) {
+                document.getElementById('genUsername').textContent = credentials.username;
+                document.getElementById('genPin').textContent = credentials.pin;
+                document.getElementById('generatedCredentials').style.display = 'block';
+                initDashboard();
+            }
+        });
+
+        // Copy credentials to clipboard
+        function copyCredentials() {
+            const username = document.getElementById('genUsername').textContent;
+            const pin = document.getElementById('genPin').textContent;
+            const text = `Username: ${username}\nPIN: ${pin}`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Credentials copied to clipboard!');
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            initDashboard();
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('adminAuth');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

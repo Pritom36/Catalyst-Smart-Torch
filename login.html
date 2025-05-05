@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Catalyst BRACU</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Header with minimal navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Catalyst <span>BRACU</span></h1>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="subscribe.html">Subscribe</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="login-section">
+        <div class="container">
+            <div class="login-container">
+                <h2>Login to Access Premium Content</h2>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="secretPin">Secret PIN</label>
+                        <input type="password" id="secretPin" placeholder="Enter your secret PIN" required>
+                    </div>
+                    <div id="loginError" class="error-message"></div>
+                    <button type="submit" class="btn primary">Login</button>
+                </form>
+                <div class="login-footer">
+                    <p>Don't have an account? <a href="subscribe.html">Subscribe now</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Catalyst BRACU. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/subscription.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const errorDiv = document.getElementById('loginError');
+            const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+
+            // Check if already logged in
+            if (SubscriptionSystem.isLoggedIn()) {
+                window.location.href = redirectUrl;
+                return;
+            }
+
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                errorDiv.textContent = '';
+
+                const username = document.getElementById('username').value;
+                const pin = document.getElementById('secretPin').value;
+
+                const isValid = await SubscriptionSystem.validateCredentials(username, pin);
+                if (isValid) {
+                    window.location.href = redirectUrl;
+                } else {
+                    errorDiv.textContent = 'Invalid credentials or expired subscription. Please try again.';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

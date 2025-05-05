@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe - Catalyst BRACU</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Catalyst <span>BRACU</span></h1>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="subscription-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Subscription Plan</h2>
+                <p>Get access to premium model questions and detailed solutions</p>
+            </div>
+
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <h4>1 Month Access</h4>
+                    <p class="price">৳499</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Full access to all model questions</li>
+                        <li><i class="fas fa-check"></i> Detailed solutions</li>
+                        <li><i class="fas fa-check"></i> 30 days access</li>
+                    </ul>
+                    <button class="btn secondary" onclick="SubscriptionSystem.handleSubscription('1-month')">Subscribe Now</button>
+                </div>
+
+                <div class="plan-card featured">
+                    <div class="featured-tag">Best Value</div>
+                    <h4>3 Months Access</h4>
+                    <p class="price">৳1299</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Everything in 1 month plan</li>
+                        <li><i class="fas fa-check"></i> Save 13% compared to monthly</li>
+                        <li><i class="fas fa-check"></i> 90 days access</li>
+                    </ul>
+                    <button class="btn primary" onclick="SubscriptionSystem.handleSubscription('3-month')">Subscribe Now</button>
+                </div>
+
+                <div class="plan-card">
+                    <h4>6 Years Access</h4>
+                    <p class="price">৳4999</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Everything in 3 month plan</li>
+                        <li><i class="fas fa-check"></i> Lifetime access guarantee</li>
+                        <li><i class="fas fa-check"></i> Best long-term value</li>
+                    </ul>
+                    <button class="btn secondary" onclick="SubscriptionSystem.handleSubscription('6-year')">Subscribe Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2>Subscription Successful!</h2>
+            <div id="credentialsInfo"></div>
+            <p>Please save these credentials securely. You'll need them to log in.</p>
+            <button class="btn primary" onclick="window.location.href='login.html'">Proceed to Login</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Catalyst BRACU. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/subscription.js"></script>
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if already subscribed
+            if (SubscriptionSystem.isLoggedIn()) {
+                window.location.href = 'profile.html';
+            }
+        });
+    </script>
+</body>
+</html>

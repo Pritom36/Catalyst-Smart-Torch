@@ -1,874 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Catalyst Smart Torch</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRAC University Model Questions & Solutions</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
-    <style>
-        :root {
-            --primary: #007AFF;
-            --primary-dark: #0066CC;
-            --danger: #FF3B30;
-            --warning: #FF9500;
-            --success: #34C759;
-            --background: #FFFFFF;
-            --card-bg: #F2F2F7;
-            --text-primary: #1C1C1E;
-            --text-secondary: #636366;
-            --section-bg: #F8F8FA;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--background);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* Main Card Styles */
-        .card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .flashlight-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--primary);
-            border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            transition: all 0.3s ease;
-        }
-
-        .flashlight-icon.active {
-            background: var(--warning);
-            box-shadow: 0 0 20px rgba(255, 149, 0, 0.3);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        h1,
-        h2,
-        h3 {
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        h1 {
-            font-size: 28px;
-        }
-
-        h2 {
-            font-size: 24px;
-        }
-
-        h3 {
-            font-size: 20px;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        /* Timer Controls Section */
-        .time-presets {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .preset-btn {
-            background: var(--background);
-            border: 1px solid #E5E5EA;
-            border-radius: 12px;
-            padding: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .preset-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .preset-btn.ad-required::after {
-            font-size: 0.8em;
-            opacity: 0.8;
-        }
-
-        .time-inputs {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin: 24px 0;
-        }
-
-        .time-column {
-            flex: 1;
-            text-align: center;
-        }
-
-        .time-input {
-            width: 100%;
-            padding: 16px;
-            font-size: 20px;
-            font-weight: 600;
-            border: 1px solid #E5E5EA;
-            border-radius: 12px;
-            background: var(--background);
-            margin-top: 8px;
-        }
-
-        .countdown {
-            font-size: 48px;
-            font-weight: 700;
-            text-align: center;
-            font-family: monospace;
-            margin: 24px 0;
-            color: var(--text-primary);
-        }
-
-        .controls {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-warning {
-            background: var(--warning);
-            color: white;
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn.ad-required::after {
-            font-size: 0.8em;
-            opacity: 0.8;
-        }
-
-        .status {
-            text-align: center;
-            margin-top: 24px;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .status-active {
-            background: rgba(0, 122, 255, 0.1);
-            color: var(--primary);
-        }
-
-        .status-inactive {
-            background: rgba(116, 116, 128, 0.1);
-            color: var(--text-secondary);
-        }
-
-        /* Promotional Slider */
-        .promo-section {
-            background: var(--section-bg);
-            border-radius: 18px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .promo-slider {
-            margin: 20px 0;
-        }
-
-        .promo-slide {
-            display: grid;
-            place-items: center;
-            height: 100%;
-        }
-
-        .promo-slide img {
-            max-width: 100%;
-            height: 500px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            object-fit: cover;
-        }
-
-        .promo-slide a {
-            display: inline-block;
-            padding: 10px 20px;
-            background: var(--primary);
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            margin-top: 12px;
-        }
-
-        .promo-slide a:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        /* Info Sections */
-        .info-section {
-            background: var(--section-bg);
-            border-radius: 18px;
-            padding: 24px;
-            margin-top: 20px;
-        }
-
-        .info-section h2 {
-            margin-bottom: 16px;
-            color: var(--primary);
-        }
-
-        .info-section p {
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        .info-section ul {
-            padding-left: 20px;
-            margin-bottom: 16px;
-        }
-
-        .info-section li {
-            margin-bottom: 8px;
-        }
-
-        .about-section {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .creator-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: white;
-            padding: 16px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .creator-card img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .creator-info h3 {
-            margin-bottom: 4px;
-        }
-
-        .creator-info p {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .social-links a {
-            color: var(--primary);
-            font-size: 20px;
-        }
-
-        /* Ad Containers */
-        .ad-container {
-            width: 100%;
-            margin: 20px 0;
-            text-align: center;
-            background: #f8f8f8;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-        }
-
-        .ad-banner {
-            width: 100%;
-            height: auto;
-            min-height: 90px;
-        }
-
-        /* Ad-related UI */
-        .ad-loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            color: white;
-        }
-
-        .ad-loading-spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .time-presets {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .controls {
-                flex-direction: column;
-            }
-
-            .creator-card {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .social-links {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .time-input {
-                font-size: 18px;
-                padding: 14px;
-            }
-
-            .countdown {
-                font-size: 36px;
-            }
-
-            .promo-slide a {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-
-            .preset-btn.ad-required::after,
-            .btn.ad-required::after {
-                content: " (Ad)";
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <div class="container">
-
-
-        <!-- Main Flashlight Card -->
-        <div class="card">
-            <div class="header">
-                <div class="flashlight-icon" id="flashlightIndicator">
-                    <i class="fas fa-lightbulb" style="font-size: 32px; color: white;"></i>
-                </div>
-                <h1>Catalyst Smart Torch</h1>
-                <p class="subtitle">Set timer for automatic flashlight off</p>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/brac-logo.png" alt="BRAC University Logo">
+                <h1>BRAC University <span>Model Questions & Solutions</span></h1>
             </div>
-
-            <div class="time-presets">
-                <button class="preset-btn ad-required" data-minutes="1">1 Min</button>
-                <button class="preset-btn ad-required" data-minutes="5">5 Min</button>
-                <button class="preset-btn ad-required" data-minutes="10">10 Min</button>
-                <button class="preset-btn ad-required" data-minutes="15">15 Min</button>
-                <button class="preset-btn ad-required" data-minutes="30">30 Min</button>
-                <button class="preset-btn ad-required" data-minutes="60">60 Min</button>
-            </div>
-
-            <div class="time-inputs">
-                <div class="time-column">
-                    <input type="number" id="hours" class="time-input" min="0" value="0" placeholder="00" disabled>
-                    <div class="time-label">Hours</div>
-                </div>
-                <div class="time-column">
-                    <input type="number" id="minutes" class="time-input" min="0" max="59" value="0" placeholder="00" disabled>
-                    <div class="time-label">Minutes</div>
-                </div>
-                <div class="time-column">
-                    <input type="number" id="seconds" class="time-input" min="0" max="59" value="0" placeholder="00" disabled>
-                    <div class="time-label">Seconds</div>
-                </div>
-            </div>
-
-            <div class="countdown" id="countdown">00:00:00</div>
-
-            <div class="controls">
-                <button id="cancelBtn" class="btn btn-danger ad-required" disabled>
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-                <button id="pauseBtn" class="btn btn-warning ad-required" disabled>
-                    <i class="fas fa-pause"></i> Pause
-                </button>
-                <button id="startBtn" class="btn btn-primary ad-required">
-                    <i class="fas fa-play"></i> Start
-                </button>
-            </div>
-
-            <div class="status status-inactive" id="status">Ready to start</div>
-        </div>
-
-        <!-- Promotional Slider -->
-        <div class="promo-section">
-            <h2 align="center">Free PDF and Audio Books</h2>
-
-            <div class="promo-slider">
-                <div class="promo-slide">
-                    <img src="2.jpg" alt="Smart Lighting Guide">
-                    <a href="https://example.com/pdf1" target="_blank">Let's Go</a>
-                </div>
-                <div class="promo-slide">
-                    <img src="1.jpg" alt="Home Automation Tips">
-                    <a href="https://example.com/pdf2" target="_blank">Let's Go</a>
-                </div>
-                <div class="promo-slide">
-                    <img src="https://via.placeholder.com/300x400/34C759/FFFFFF?text=Energy+Saving+Guide" alt="Energy Saving Guide">
-                    <a href="https://example.com/pdf3" target="_blank">Let's Go</a>
-                </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#questions">Questions</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li id="authLinks">
+                        <!-- Auth links will be inserted here dynamically -->
+                    </li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
             </div>
         </div>
-
-        <!-- Instructions Section -->
-        <div class="info-section">
-            <h2>How It Works</h2>
-            <p>Catalyst Smart Torch helps you manage your device's flashlight with timer functionality:</p>
-            <ul>
-                <li>Set hours, minutes, or seconds for automatic flashlight turn-off</li>
-                <li>Use presets for common time intervals (requires watching a short ad)</li>
-                <li>Pause/resume the timer as needed (requires watching a short ad)</li>
-                <li>Cancel anytime to turn off immediately (requires watching a short ad)</li>
-            </ul>
-            <p>The app works best on Chrome for Android with devices that support flashlight functionality.</p>
-            <p><strong>Note:</strong> Watching ads helps support the development of this free app.</p>
-        </div>
-
-        <!-- About Section -->
-        <div class="info-section about-section">
-            <h2>About Us</h2>
-            <p>রাতে বই হাতে ঘুমিয়ে পড়ি, মোবাইল জ্বলে টিমটিম,</p>
-            <p>ব্যাটারি বলে, "বাঁচাও আমায়! নাই আর কিছু স্টিম!"</p>
-            <p>গরম হয়ে ফোনটা কয়, "আগুন লাগবে, ঠান্ডা দে!"</p>
-            <p>বিদ্যুৎ হাসে, "এভাবেই যদি চলে, বিলটা দিবি কে?"</p>
-            <p>তাই বানালাম স্মার্ট লাইট, টাইমার দাও, ঘুমাও বেঁধে!</p>
-
-            <div class="creator-card">
-                <img src="admin.jpg" alt="Creator">
-                <div class="creator-info">
-                    <h3>Pritom Bhowmik</h3>
-                    <p>Founder & Lead Developer</p>
-                    <div class="social-links">
-                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </header>
+    <!-- Mobile Menu -->
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="animated-text">Master Your Exams with <span>Model Questions</span></h1>
+                <p class="subtitle">Comprehensive collection of past exam questions with detailed solutions for BRAC University students</p>
+                <div class="cta-buttons">
+                    <a href="#questions" class="btn primary">View Questions</a>
+                    <div id="heroAuthBtn">
+                        <!-- Will be populated dynamically -->
                     </div>
                 </div>
             </div>
-
-            <p>Contact us at: <a href="mailto:pritombhowmik360@gmail.com">pritombhowmik360@gmail.com</a></p>
+            <div class="hero-image">
+                <img src="images/study.svg" alt="Student studying" class="float-animation">
+            </div>
         </div>
+    </section>
 
-        <!-- Banner Ad at the bottom -->
-        <div class="ad-container">
-            <!-- Adsterra Banner Ad -->
-            <iframe src="https://wipehumorousbeen.com/nnj13hphjx?key=bf9d7106eeef221c1e9861bf2a06ceef" width="728" height="90" scrolling="no" frameborder="0"></iframe>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Our Model Questions?</h2>
+                <p>Designed to help you excel in your exams</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon-box">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Exam Pattern</h3>
+                    <p>Questions follow the exact format and difficulty level of actual BRAC University exams</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Comprehensive</h3>
+                    <p>Covers all major subjects and topics from various departments</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Detailed Solutions</h3>
+                    <p>Step-by-step solutions to help you understand concepts thoroughly</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Questions Section -->
+    <section class="questions" id="questions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Model Questions Collection</h2>
+                <p>Select any model question to view and download</p>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Search model questions...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="questions-grid" id="questions-container">
+                <!-- Questions will be loaded dynamically via JavaScript -->
+            </div>
+            <div class="pagination">
+                <button id="prev-page"><i class="fas fa-chevron-left"></i> Previous</button>
+                <div class="page-numbers" id="page-numbers"></div>
+                <button id="next-page">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>About This Platform</h2>
+                <p>This platform was created to help BRAC University students prepare effectively for their examinations. Our collection of model questions is curated by alumni and faculty members to ensure relevance and accuracy.</p>
+                <p>We continuously update our question bank to reflect the latest curriculum changes and exam patterns.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <h3>30+</h3>
+                        <p>Model Questions</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>15+</h3>
+                        <p>Subjects Covered</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>1000+</h3>
+                        <p>Students Helped</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="images/brac-campus.jpg" alt="BRAC University Campus">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Have Questions?</h2>
+                <p>Reach out to us for any inquiries or suggestions</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>questions@bracmodel.edu</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+880 2 984 4051</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>66 Mohakhali, Dhaka 1212, Bangladesh</p>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Login Required</h2>
+            <p>Please login to access premium model questions</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="secretPin" placeholder="Secret Pin" required>
+                </div>
+                <button type="submit" class="btn primary">Login</button>
+            </form>
+            <div class="subscription-plans">
+                <h3>Choose a Subscription Plan</h3>
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <h4>1 Month Access</h4>
+                        <p class="price">৳499</p>
+                        <ul>
+                            <li>Full access to all model questions</li>
+                            <li>Detailed solutions</li>
+                            <li>30 days access</li>
+                        </ul>
+                        <button class="btn secondary" onclick="window.location.href='https://wa.me/1234567890?text=I want to subscribe for 1 month'">Subscribe</button>
+                    </div>
+                    <div class="plan-card featured">
+                        <h4>3 Months Access</h4>
+                        <p class="price">৳1299</p>
+                        <ul>
+                            <li>Everything in 1 month plan</li>
+                            <li>Save 13% compared to monthly</li>
+                            <li>90 days access</li>
+                        </ul>
+                        <button class="btn primary" onclick="window.location.href='https://wa.me/1234567890?text=I want to subscribe for 3 months'">Best Value</button>
+                    </div>
+                    <div class="plan-card">
+                        <h4>6 Years Access</h4>
+                        <p class="price">৳4999</p>
+                        <ul>
+                            <li>Everything in 3 month plan</li>
+                            <li>Lifetime access guarantee</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <button class="btn secondary" onclick="window.location.href='https://wa.me/1234567890?text=I want to subscribe for 6 years'">Subscribe</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- WhatsApp Chat Integration -->
+    <a href="https://wa.me/1234567890?text=Hello%20Admin%2C%20I%27d%20like%20to%20chat." target="_blank" class="whatsapp-chat">
+        <i class="fab fa-whatsapp"></i> Chat with Admin
+    </a>
 
-    <!-- Ad loading overlay (hidden by default) -->
-    <div class="ad-loading" id="adLoadingOverlay" style="display: none;">
-        <div class="ad-loading-spinner"></div>
-        <h3>Please ignore watch the ad to continue</h3>
-        <p>We're showing an advertisement to support this free app.</p>
-        <p>After 5 sec you would able to close this ad</p>
-        <div id="adFrameContainer" style="width: 100%; height: 300px; margin-top: 20px;">
-            <iframe id="adFrame" src="" style="width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-        <button id="continueBtn" style="margin-top: 20px; padding: 10px 20px; background: var(--success); color: white; border: none; border-radius: 5px; cursor: pointer; display: none;">
-            Continue to Feature
-        </button>
-    </div>
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-
+    <script src="js/protection.js"></script>
+    <script src="js/subscription.js"></script>
     <script>
-        // DOM Elements
-        const hoursInput = document.getElementById('hours');
-        const minutesInput = document.getElementById('minutes');
-        const secondsInput = document.getElementById('seconds');
-        const countdown = document.getElementById('countdown');
-        const startBtn = document.getElementById('startBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const status = document.getElementById('status');
-        const presetBtns = document.querySelectorAll('.preset-btn');
-        const flashlightIndicator = document.getElementById('flashlightIndicator');
-        const adRequiredButtons = document.querySelectorAll('.ad-required');
-        const adLoadingOverlay = document.getElementById('adLoadingOverlay');
-        const adFrame = document.getElementById('adFrame');
-        const continueBtn = document.getElementById('continueBtn');
-        const adFrameContainer = document.getElementById('adFrameContainer');
-
-        // App State
-        let mediaStream = null;
-        let timer = null;
-        let remainingTime = 0;
-        let isPaused = false;
-        let isRunning = false;
-        let lastAdShownTime = 0;
-        const AD_INTERVAL = 5 * 60 * 1000; // 5 minutes in milliseconds
-        let currentAdAction = null;
-        
-        // Adsterra Configuration
-        const ADSTERRA_LINK = "https://wipehumorousbeen.com/nnj13hphjx?key=bf9d7106eeef221c1e9861bf2a06ceef";
-        const ADSTERRA_ID = "26099760";
-
-        // Initialize Slick Slider
-        $(document).ready(function () {
-            $('.promo-slider').slick({
-                dots: true,
-                infinite: true,
-                speed: 300,
-                slidesToShow: 1,
-                adaptiveHeight: true,
-                autoplay: true,
-                autoplaySpeed: 3000
-            });
-
-            // Set up interval for showing interstitial ads
-            setInterval(checkAdInterval, 60000); // Check every minute
-        });
-
-        // Check if it's time to show an interstitial ad
-        function checkAdInterval() {
-            const currentTime = Date.now();
-            if (currentTime - lastAdShownTime >= AD_INTERVAL) {
-                showInterstitialAd();
-                lastAdShownTime = currentTime;
-            }
-        }
-
-        // Show a rewarded ad and execute callback when completed
-        function showRewardedAd(actionCallback, buttonId) {
-            // Store the action to perform after ad
-            currentAdAction = { callback: actionCallback, buttonId: buttonId };
-            
-            // Show loading overlay
-            adLoadingOverlay.style.display = 'flex';
-            
-            // Load Adsterra ad directly in the iframe
-            adFrame.src = ADSTERRA_LINK;
-            
-            // Show continue button after a delay (simulating ad completion)
-            setTimeout(() => {
-                continueBtn.style.display = 'block';
-            }, 5000); // Show continue button after 15 seconds
-        }
-
-        // Show an interstitial ad
-        function showInterstitialAd() {
-            // Open Adsterra ad in new tab
-            window.open(ADSTERRA_LINK, '_blank');
-        }
-
-        // Flashlight control with proper cleanup
-        async function toggleFlashlight(state) {
-            try {
-                if (state) {
-                    const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode: 'environment', advanced: [{ torch: true }] }
-                    });
-                    const track = stream.getVideoTracks()[0];
-
-                    if (mediaStream) {
-                        mediaStream.getTracks().forEach(t => t.stop());
-                    }
-
-                    mediaStream = stream;
-                    await track.applyConstraints({ advanced: [{ torch: true }] });
-                    flashlightIndicator.classList.add('active');
-                } else {
-                    if (mediaStream) {
-                        mediaStream.getTracks().forEach(t => t.stop());
-                        mediaStream = null;
-                    }
-                    flashlightIndicator.classList.remove('active');
-                }
-            } catch (error) {
-                console.error('Flashlight error:', error);
-                status.textContent = 'Flashlight unavailable';
-                flashlightIndicator.classList.remove('active');
-            }
-        }
-
-        // Timer functions with proper state management
-        function updateTimer() {
-            if (!isPaused && remainingTime > 0) {
-                remainingTime -= 1000;
-                updateDisplay();
-
-                if (remainingTime <= 0) {
-                    clearInterval(timer);
-                    isRunning = false;
-                    toggleFlashlight(false);
-                    status.textContent = 'Timer completed';
-                    resetControls();
-                    
-                    // Show an ad when timer completes
-                    showInterstitialAd();
-                }
-            }
-        }
-
-        function startTimer() {
-            const hours = parseInt(hoursInput.value) || 0;
-            const minutes = parseInt(minutesInput.value) || 0;
-            const seconds = parseInt(secondsInput.value) || 0;
-
-            remainingTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
-
-            if (remainingTime <= 0) {
-                status.textContent = 'Please set a valid time';
-                return;
-            }
-
-            clearInterval(timer);
-            isRunning = true;
-            isPaused = false;
-
-            toggleFlashlight(true);
-            timer = setInterval(updateTimer, 1000);
-            updateDisplay();
-
-            startBtn.disabled = true;
-            pauseBtn.disabled = false;
-            cancelBtn.disabled = false;
-            status.textContent = 'Timer running';
-        }
-
-        function togglePause() {
-            isPaused = !isPaused;
-
-            if (isPaused) {
-                toggleFlashlight(false);
-                status.textContent = 'Timer paused';
-                pauseBtn.innerHTML = '<i class="fas fa-play"></i> Resume (Watch Ad)';
+        // Update auth links based on login status
+        function updateAuthLinks() {
+            const authLinks = document.getElementById('authLinks');
+            if (SubscriptionSystem.isLoggedIn()) {
+                authLinks.innerHTML = `
+                    <a href="profile.html" class="nav-link">Profile</a>
+                    <a href="#" onclick="SubscriptionSystem.logout(); return false;" class="nav-link">Logout</a>
+                `;
             } else {
-                if (remainingTime > 0) {
-                    toggleFlashlight(true);
-                    status.textContent = 'Timer resumed';
-                    pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause (Watch Ad)';
-                }
+                authLinks.innerHTML = `
+                    <a href="login.html" class="nav-link">Login</a>
+                    <a href="subscribe.html" class="nav-link highlight">Subscribe</a>
+                `;
             }
         }
 
-        function cancelTimer() {
-            clearInterval(timer);
-            remainingTime = 0;
-            isRunning = false;
-            isPaused = false;
-            toggleFlashlight(false);
-            updateDisplay();
-            resetControls();
-            status.textContent = 'Timer cancelled';
-
-            // Force cleanup
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(track => track.stop());
-                mediaStream = null;
+        // Update hero auth button based on login status
+        function updateHeroAuthButton() {
+            const heroAuthBtn = document.getElementById('heroAuthBtn');
+            if (SubscriptionSystem.isLoggedIn()) {
+                heroAuthBtn.innerHTML = `
+                    <a href="profile.html" class="btn secondary">View Profile</a>
+                `;
+            } else {
+                heroAuthBtn.innerHTML = `
+                    <a href="subscribe.html" class="btn secondary">Subscribe Now</a>
+                `;
             }
         }
 
-        function updateDisplay() {
-            const hours = Math.floor(remainingTime / 3600000);
-            const minutes = Math.floor((remainingTime % 3600000) / 60000);
-            const seconds = Math.floor((remainingTime % 60000) / 1000);
-
-            countdown.textContent =
-                `${String(hours).padStart(2, '0')}:
-                 ${String(minutes).padStart(2, '0')}:
-                 ${String(seconds).padStart(2, '0')}`;
-        }
-
-        function resetControls() {
-            startBtn.disabled = false;
-            pauseBtn.disabled = true;
-            cancelBtn.disabled = true;
-            pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause (Watch Ad)';
-        }
-
-        // Execute the action after ad is watched
-        function executeAdAction() {
-            if (!currentAdAction) return;
-            
-            const { callback, buttonId } = currentAdAction;
-            
-            switch(buttonId) {
-                case 'startBtn':
-                    startTimer();
-                    break;
-                case 'pauseBtn':
-                    togglePause();
-                    break;
-                case 'cancelBtn':
-                    cancelTimer();
-                    break;
-                default:
-                    // Handle preset buttons
-                    const button = document.querySelector(`[data-minutes="${buttonId}"]`);
-                    if (button && button.classList.contains('preset-btn')) {
-                        const minutes = parseInt(buttonId);
-                        hoursInput.value = Math.floor(minutes / 60);
-                        minutesInput.value = minutes % 60;
-                        secondsInput.value = 0;
-                        presetBtns.forEach(b => b.classList.remove('active'));
-                        button.classList.add('active');
-                    }
-                    break;
-            }
-            
-            // Reset ad state
-            currentAdAction = null;
-            adLoadingOverlay.style.display = 'none';
-            adFrame.src = '';
-            continueBtn.style.display = 'none';
-        }
-
-        // Event listeners for buttons that require ads
-        adRequiredButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const buttonId = this.id || this.dataset.minutes;
-                
-                // For preset buttons, we'll use the minutes value as ID
-                if (this.classList.contains('preset-btn')) {
-                    showRewardedAd(null, this.dataset.minutes);
-                } else {
-                    showRewardedAd(null, buttonId);
-                }
-            });
-        });
-
-        // Continue button after ad
-        continueBtn.addEventListener('click', executeAdAction);
-
-        // Input validation
-        [hoursInput, minutesInput, secondsInput].forEach(input => {
-            input.addEventListener('input', () => {
-                if (input.value < 0) input.value = 0;
-                if (input === minutesInput || input === secondsInput) {
-                    if (input.value > 59) input.value = 59;
-                }
-                presetBtns.forEach(b => b.classList.remove('active'));
-            });
+        // Initialize hero auth button
+        document.addEventListener('DOMContentLoaded', function() {
+            updateHeroAuthButton();
+            updateAuthLinks();
         });
     </script>
+    <script src="js/script.js"></script>
 </body>
-
 </html>

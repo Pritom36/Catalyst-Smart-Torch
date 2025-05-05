@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Catalyst BRACU</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Catalyst <span>BRACU</span></h1>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#" onclick="SubscriptionSystem.logout(); return false;">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="profile-section">
+        <div class="container">
+            <div class="profile-container">
+                <div class="section-header">
+                    <h2>Your Profile</h2>
+                </div>
+                <div class="profile-content" id="profileContent">
+                    <div class="profile-loading">Loading profile...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Catalyst BRACU. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/subscription.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check if logged in
+            if (!SubscriptionSystem.isLoggedIn()) {
+                window.location.href = 'login.html?redirect=profile.html';
+                return;
+            }
+
+            const profileContent = document.getElementById('profileContent');
+            const profile = await SubscriptionSystem.getUserProfile();
+
+            if (profile) {
+                const expiryDate = new Date(profile.expiry_date);
+                const isActive = expiryDate > new Date();
+                
+                profileContent.innerHTML = `
+                    <div class="profile-info ${isActive ? 'active' : 'expired'}">
+                        <div class="profile-status">
+                            <span class="status-badge ${isActive ? 'active' : 'expired'}">
+                                ${isActive ? 'Active' : 'Expired'}
+                            </span>
+                        </div>
+                        <div class="profile-details">
+                            <div class="detail-group">
+                                <label>Username</label>
+                                <p>${profile.username}</p>
+                            </div>
+                            <div class="detail-group">
+                                <label>Subscription Type</label>
+                                <p>${profile.subscription_type}</p>
+                            </div>
+                            <div class="detail-group">
+                                <label>Start Date</label>
+                                <p>${new Date(profile.start_date).toLocaleDateString()}</p>
+                            </div>
+                            <div class="detail-group">
+                                <label>Expiry Date</label>
+                                <p>${new Date(profile.expiry_date).toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                        ${!isActive ? `
+                            <div class="renewal-section">
+                                <h3>Subscription Expired</h3>
+                                <p>Your subscription has expired. Renew now to continue accessing premium content.</p>
+                                <button class="btn primary" onclick="window.location.href='subscribe.html'">
+                                    Renew Subscription
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            } else {
+                profileContent.innerHTML = `
+                    <div class="error-message">
+                        <p>Error loading profile. Please try logging in again.</p>
+                        <button class="btn primary" onclick="window.location.href='login.html'">
+                            Back to Login
+                        </button>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
