@@ -29,6 +29,13 @@
         "subscription_type": "3-month",
         "start_date": "2025-01-01",
         "expiry_date": "2025-07-01"
+      },
+      {
+        "username": "Fariha",
+        "pin": "909090",
+        "subscription_type": "6-month",
+        "start_date": "2025-05-10",
+        "expiry_date": "2025-11-10"
       }
   ]
 }
